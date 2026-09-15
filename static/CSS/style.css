@@ -1,0 +1,106 @@
+body{
+    background-color:#f8f9fa;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* NAVBAR */
+
+.navbar{
+    box-shadow:0px 2px 8px rgba(0,0,0,0.15);
+}
+
+.navbar-brand{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.nav-link{
+    font-size:17px;
+}
+
+.nav-link:hover{
+    color:#e40909 !important;
+}
+
+/* HERO SECTION */
+
+h1{
+    color:#0d6efd;
+}
+
+.lead{
+    font-size:20px;
+    line-height:1.8;
+}
+
+/* BUTTONS */
+
+.btn-primary{
+    border-radius:10px;
+    padding:12px 25px;
+}
+
+.btn-primary:hover{
+    transform:scale(1.03);
+    transition:0.3s;
+}
+
+/* CARDS */
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card-header{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    transition:0.3s;
+}
+
+/* FORM INPUTS */
+
+.form-control,
+.form-select{
+
+    border-radius:10px;
+    padding:10px;
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#0d6efd;
+    box-shadow:0 0 8px rgba(13,110,253,.3);
+
+}
+
+/* TABLES */
+
+table{
+
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+/* FOOTER */
+
+footer{
+
+    margin-top:80px;
+    font-size:15px;
+
+}
+
+/* ALERTS */
+
+.alert{
+
+    border-radius:12px;
+
+}

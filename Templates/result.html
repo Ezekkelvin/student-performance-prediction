@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title %}
+Prediction Result
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold text-primary">
+            Prediction Result
+        </h1>
+
+        <p class="text-muted">
+            The student's academic information has been successfully analysed.
+        </p>
+
+    </div>
+
+
+    <!-- Student Information -->
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                Student Information
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+
+                <tr>
+                    <th width="40%">Student Level</th>
+                    <td>{{ level }}</td>
+                </tr>
+
+                <tr>
+                    <th>Attendance</th>
+                    <td>{{ attendance }}%</td>
+                </tr>
+
+                <tr>
+                    <th>Assignment Score</th>
+                    <td>{{ assignment }}</td>
+                </tr>
+
+                <tr>
+                    <th>Practical Score</th>
+                    <td>{{ practical }}</td>
+                </tr>
+
+                <tr>
+                    <th>Continuous Assessment</th>
+                    <td>{{ ca }}</td>
+                </tr>
+
+                <tr>
+                    <th>Previous CGPA</th>
+                    <td>{{ cgpa }}</td>
+                </tr>
+
+                <tr>
+                    <th>Class Participation</th>
+                    <td>{{ participation }}</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- Analysis Summary -->
+    <div class="card shadow mb-5">
+
+        <div class="card-header bg-secondary text-white">
+
+            <h4 class="mb-0">
+                Analysis Summary
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <p class="lead">
+
+                The Machine Learning system analyses the student's
+                academic indicators, including attendance, assignment
+                performance, practical performance, continuous assessment,
+                previous CGPA and class participation.
+
+            </p>
+
+            <p>
+
+                These indicators are used to estimate the student's
+                expected academic performance before the final examination.
+
+            </p>
+
+            <div class="alert alert-info">
+
+                <strong>
+                    Please scroll down to view the prediction result.
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Space Before Result -->
+    <div style="height: 220px;"></div>
+
+
+    <!-- Prediction Heading -->
+    <div class="text-center mb-4">
+
+        <h1 class="fw-bold text-primary">
+            Predicted Performance
+        </h1>
+
+    </div>
+
+
+    <!-- EXCELLENT -->
+    {% if prediction == "Excellent" %}
+
+    <div class="card shadow-lg border-success">
+
+        <div class="card-header bg-success text-white text-center">
+
+            <h2>
+                Excellent
+            </h2>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <div style="font-size: 90px;">
+                🟢
+            </div>
+
+            <h2 class="text-success fw-bold">
+                EXCELLENT
+            </h2>
+
+            <p class="lead">
+
+                The model predicts that the student is likely to
+                perform excellently in this course.
+
+            </p>
+
+
+            <div class="alert alert-success">
+
+                <strong>Recommendation:</strong><br>
+
+                Continue maintaining good attendance, consistent study
+                habits and active participation in class.
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- Confidence -->
+            <h4>
+                Prediction Confidence
+            </h4>
+
+            <div class="progress" style="height: 35px;">
+
+                <div
+                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style="width: {{ confidence }}%;">
+
+                    {{ confidence }}%
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- AVERAGE -->
+    {% elif prediction == "Average" %}
+
+    <div class="card shadow-lg border-warning">
+
+        <div class="card-header bg-warning text-dark text-center">
+
+            <h2>
+                Average
+            </h2>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <div style="font-size: 90px;">
+                🟡
+            </div>
+
+            <h2 class="text-warning fw-bold">
+                AVERAGE
+            </h2>
+
+            <p class="lead">
+
+                The model predicts that the student is likely to
+                achieve an average academic performance.
+
+            </p>
+
+
+            <div class="alert alert-warning">
+
+                <strong>Recommendation:</strong><br>
+
+                Improve attendance, coursework and revision in order
+                to increase the likelihood of achieving better results.
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- Confidence -->
+            <h4>
+                Prediction Confidence
+            </h4>
+
+            <div class="progress" style="height: 35px;">
+
+                <div
+                    class="progress-bar bg-warning text-dark progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style="width: {{ confidence }}%;">
+
+                    {{ confidence }}%
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- AT RISK -->
+    {% else %}
+
+    <div class="card shadow-lg border-danger">
+
+        <div class="card-header bg-danger text-white text-center">
+
+            <h2>
+                At Risk
+            </h2>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <div style="font-size: 90px;">
+                🔴
+            </div>
+
+            <h2 class="text-danger fw-bold">
+                AT RISK
+            </h2>
+
+            <p class="lead">
+
+                The model predicts that the student may be at risk
+                of poor academic performance.
+
+            </p>
+
+
+            <div class="alert alert-danger">
+
+                <strong>Recommendation:</strong><br>
+
+                Immediate academic intervention is recommended.
+                The student should improve attendance, coursework
+                and participation and seek academic support before
+                the final examination.
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- Confidence -->
+            <h4>
+                Prediction Confidence
+            </h4>
+
+            <div class="progress" style="height: 35px;">
+
+                <div
+                    class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style="width: {{ confidence }}%;">
+
+                    {{ confidence }}%
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Buttons -->
+    <div class="text-center mt-5 mb-5">
+
+        <a
+            href="{{ url_for('predict') }}"
+            class="btn btn-primary btn-lg me-3">
+
+            Predict Another Student
+
+        </a>
+
+        <a
+            href="{{ url_for('home') }}"
+            class="btn btn-outline-secondary btn-lg">
+
+            Return Home
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

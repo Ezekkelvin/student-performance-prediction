@@ -1,0 +1,396 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<div class="container py-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-6">
+
+            <h1 class="display-4 fw-bold text-primary">
+
+                Student Performance Prediction System
+
+            </h1>
+
+            <p class="lead mt-4">
+
+                A Machine Learning-based web application designed to
+                predict students' academic performance before the final
+                examination using key academic indicators.
+
+            </p>
+
+            <p class="text-muted">
+
+                The system helps lecturers identify students who may be
+                at risk early enough to provide academic support and
+                improve learning outcomes.
+
+            </p>
+
+            <div class="mt-4">
+
+                <a href="{{ url_for('predict') }}"
+                   class="btn btn-primary btn-lg me-3">
+
+                    Start Prediction
+
+                </a>
+
+                <a href="{{ url_for('about') }}"
+                   class="btn btn-outline-primary btn-lg">
+
+                    Learn More
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 text-center">
+
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+                 class="img-fluid"
+                 style="max-height:380px;">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Statistics -->
+
+<div class="container mb-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center p-4">
+
+                <h1 class="text-primary">
+
+                    1000+
+
+                </h1>
+
+                <h5>
+
+                    Student Records
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center p-4">
+
+                <h1 class="text-success">
+
+                    2
+
+                </h1>
+
+                <h5>
+
+                    ML Algorithms
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center p-4">
+
+                <h1 class="text-warning">
+
+                    3
+
+                </h1>
+
+                <h5>
+
+                    Prediction Classes
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow text-center p-4">
+
+                <h1 class="text-danger">
+
+                    Real-Time
+
+                </h1>
+
+                <h5>
+
+                    Prediction
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Features -->
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h2 class="fw-bold">
+
+            System Features
+
+        </h2>
+
+        <p class="text-muted">
+
+            Key capabilities of the Student Performance Prediction System.
+
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow">
+
+                <div class="card-body">
+
+                    <h3 class="text-primary">
+
+                    
+
+                    </h3>
+
+                    <h4>
+
+                        Early Prediction
+
+                    </h4>
+
+                    <p>
+
+                        Predict students' academic performance before
+                        the final examination using continuous academic
+                        records.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow">
+
+                <div class="card-body">
+
+                    <h3 class="text-success">
+
+                    
+
+                    </h3>
+
+                    <h4>
+
+                        Machine Learning
+
+                    </h4>
+
+                    <p>
+
+                        Uses Logistic Regression and Random Forest
+                        algorithms to provide intelligent predictions.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow">
+
+                <div class="card-body">
+
+                    <h3 class="text-danger">
+
+                    
+
+                    </h3>
+
+                    <h4>
+
+                        Early Intervention
+
+                    </h4>
+
+                    <p>
+
+                        Enables lecturers to identify at-risk students
+                        and provide support before examinations.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- How It Works -->
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h2 class="fw-bold">
+
+            How It Works
+
+        </h2>
+
+    </div>
+
+    <div class="row text-center">
+
+        <div class="col-md-3">
+
+            <div class="card shadow p-4">
+
+                <h1 class="text-primary">
+
+                    1
+
+                </h1>
+
+                <h5>
+
+                    Enter Student Data
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow p-4">
+
+                <h1 class="text-success">
+
+                    2
+
+                </h1>
+
+                <h5>
+
+                    Machine Learning Analysis
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow p-4">
+
+                <h1 class="text-warning">
+
+                    3
+
+                </h1>
+
+                <h5>
+
+                    Generate Prediction
+
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card shadow p-4">
+
+                <h1 class="text-danger">
+
+                    4
+
+                </h1>
+
+                <h5>
+
+                    Academic Recommendation
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Footer -->
+
+<div class="container mt-5 mb-3">
+
+    <hr>
+
+    <p class="text-center text-muted">
+
+        Student Performance Prediction System using Machine Learning |
+        Final Year Project | Software Engineering
+
+    </p>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}
+Predict Student Performance
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold text-primary">
+            Student Performance Prediction
+        </h1>
+
+        <p class="lead text-muted">
+            Enter the student's academic information below to predict
+            the expected performance before the final examination.
+        </p>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3 class="mb-0">
+                        Student & Academic Information
+                    </h3>
+
+                </div>
+
+
+                <div class="card-body p-4">
+
+                    <form method="POST">
+
+                        <div class="row">
+
+                            <!-- Student Level -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Student Level
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    name="level"
+                                    required>
+
+                                    <option value="">
+                                        Select Level
+                                    </option>
+
+                                    <option value="100 Level">
+                                        100 Level
+                                    </option>
+
+                                    <option value="200 Level">
+                                        200 Level
+                                    </option>
+
+                                    <option value="300 Level">
+                                        300 Level
+                                    </option>
+
+                                    <option value="400 Level">
+                                        400 Level
+                                    </option>
+
+                                    <option value="500 Level">
+                                        500 Level
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Number of Classes Held -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Number of Classes Held
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="classes_held"
+                                    min="1"
+                                    placeholder="e.g. 20"
+                                    required>
+
+                            </div>
+
+
+                            <!-- Number of Classes Attended -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Classes Attended
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="classes_attended"
+                                    min="0"
+                                    placeholder="e.g. 17"
+                                    required>
+
+                            </div>
+
+
+                            <!-- Previous CGPA -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Previous CGPA
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="cgpa"
+                                    min="0"
+                                    max="5"
+                                    step="0.01"
+                                    placeholder="e.g. 3.85"
+                                    required>
+
+                            </div>
+
+
+                            <!-- Assignment -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Assignment Score
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="assignment"
+                                    min="0"
+                                    max="20"
+                                    placeholder="Score over 20"
+                                    required>
+
+                            </div>
+
+
+                            <!-- Practical -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Practical Score
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="practical"
+                                    min="0"
+                                    max="20"
+                                    placeholder="Score over 20"
+                                    required>
+
+                            </div>
+
+
+                            <!-- CA -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Continuous Assessment (CA)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="ca"
+                                    min="0"
+                                    max="20"
+                                    placeholder="Score over 20"
+                                    required>
+
+                            </div>
+
+
+                            <!-- Class Participation -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-bold">
+                                    Class Participation
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    name="participation"
+                                    required>
+
+                                    <option value="">
+                                        Select Participation
+                                    </option>
+
+                                    <option value="High">
+                                        High
+                                    </option>
+
+                                    <option value="Medium">
+                                        Medium
+                                    </option>
+
+                                    <option value="Low">
+                                        Low
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Buttons -->
+
+                        <div class="text-center mt-4">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg px-5">
+
+                                Predict Performance
+
+                            </button>
+
+
+                            <a
+                                href="{{ url_for('home') }}"
+                                class="btn btn-outline-secondary btn-lg px-5 ms-2">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
