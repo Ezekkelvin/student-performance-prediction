@@ -3,73 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Student Performance Prediction System{% endblock %}</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}Student Performance Prediction{% endblock %}</title>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta
+        name="description"
+        content="Machine learning-based student performance prediction system."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='CSS/style.css') }}"
+    >
 </head>
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
+    <nav class="navbar">
 
-        <a class="navbar-brand fw-bold" href="/">
-            Student Performance Prediction
-        </a>
+        <div class="nav-container">
 
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+            <a href="{{ url_for('home') }}" class="brand">
+                <div class="brand-mark">SP</div>
 
-            <span class="navbar-toggler-icon"></span>
+                <div class="brand-text">
+                    <span>Student Performance</span>
+                    <small>Prediction System</small>
+                </div>
+            </a>
 
-        </button>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}"
+                   class="{% if request.endpoint == 'home' %}active{% endif %}">
+                    Home
+                </a>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+                <a href="{{ url_for('predict') }}"
+                   class="{% if request.endpoint == 'predict' %}active{% endif %}">
+                    Predict
+                </a>
 
-            <ul class="navbar-nav ms-auto">
+                <a href="{{ url_for('about') }}"
+                   class="{% if request.endpoint == 'about' %}active{% endif %}">
+                    About
+                </a>
+            </div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/predict">Predict</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-
-            </ul>
+            <a href="{{ url_for('predict') }}" class="nav-button">
+                Make Prediction
+            </a>
 
         </div>
 
-    </div>
-</nav>
+    </nav>
 
-<!-- Page Content -->
-<div class="container my-5">
 
-    {% block content %}
-    {% endblock %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
-</div>
 
-<!-- Footer -->
-<footer class="bg-primary text-white text-center p-3 mt-5">
+    <footer class="footer">
 
-    © 2026 Student Performance Prediction System
+        <div class="footer-container">
 
-</footer>
+            <div>
+                <strong>Student Performance Prediction System</strong>
+                <p>
+                    A machine learning-based system for early academic
+                    performance monitoring.
+                </p>
+            </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="footer-right">
+                <span>Final Year Project</span>
+                <span>Software Engineering</span>
+            </div>
+
+        </div>
+
+    </footer>
 
 </body>
 </html>

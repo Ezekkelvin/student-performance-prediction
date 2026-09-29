@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 .vscode/recovery-codes.txt
+.vscode/
+recovery-codes.txt

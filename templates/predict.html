@@ -1,272 +1,361 @@
 {% extends "base.html" %}
 
-{% block title %}
-Predict Student Performance
-{% endblock %}
+{% block title %}Prediction | Student Performance{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<section class="page-header">
 
-    <!-- Header -->
-    <div class="text-center mb-5">
+    <div class="page-header-container">
 
-        <h1 class="fw-bold text-primary">
-            Student Performance Prediction
-        </h1>
+        <div>
+            <span class="eyebrow">PREDICTION ENGINE</span>
 
-        <p class="lead text-muted">
-            Enter the student's academic information below to predict
-            the expected performance before the final examination.
-        </p>
+            <h1>Student Performance Prediction</h1>
+
+            <p>
+                Enter the student's current academic information below.
+                The system will analyse the data and generate a predicted
+                performance category.
+            </p>
+        </div>
+
+        <div class="header-badge">
+            <span class="status-dot"></span>
+            Model Ready
+        </div>
 
     </div>
 
+</section>
 
-    <div class="row justify-content-center">
 
-        <div class="col-lg-9">
+<section class="prediction-section">
 
-            <div class="card shadow-lg border-0">
+    <div class="form-container">
 
-                <div class="card-header bg-primary text-white">
+        <form method="POST" action="{{ url_for('predict') }}">
 
-                    <h3 class="mb-0">
-                        Student & Academic Information
-                    </h3>
+            <!-- STUDENT INFORMATION -->
+
+            <div class="form-card">
+
+                <div class="form-card-header">
+
+                    <div class="form-section-number">01</div>
+
+                    <div>
+                        <h2>Student Information</h2>
+                        <p>Basic information about the student.</p>
+                    </div>
 
                 </div>
 
 
-                <div class="card-body p-4">
+                <div class="form-grid">
 
-                    <form method="POST">
+                    <div class="form-group">
 
-                        <div class="row">
+                        <label for="level">
+                            Student Level
+                        </label>
 
-                            <!-- Student Level -->
-                            <div class="col-md-6 mb-4">
+                        <select id="level" name="level" required>
 
-                                <label class="form-label fw-bold">
-                                    Student Level
-                                </label>
+                            <option value="" disabled selected>
+                                Select level
+                            </option>
 
-                                <select
-                                    class="form-select"
-                                    name="level"
-                                    required>
+                            <option value="100 Level">100 Level</option>
+                            <option value="200 Level">200 Level</option>
+                            <option value="300 Level">300 Level</option>
+                            <option value="400 Level">400 Level</option>
+                            <option value="500 Level">500 Level</option>
 
-                                    <option value="">
-                                        Select Level
-                                    </option>
+                        </select>
 
-                                    <option value="100 Level">
-                                        100 Level
-                                    </option>
-
-                                    <option value="200 Level">
-                                        200 Level
-                                    </option>
-
-                                    <option value="300 Level">
-                                        300 Level
-                                    </option>
-
-                                    <option value="400 Level">
-                                        400 Level
-                                    </option>
-
-                                    <option value="500 Level">
-                                        500 Level
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- Number of Classes Held -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Number of Classes Held
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="classes_held"
-                                    min="1"
-                                    placeholder="e.g. 20"
-                                    required>
-
-                            </div>
-
-
-                            <!-- Number of Classes Attended -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Classes Attended
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="classes_attended"
-                                    min="0"
-                                    placeholder="e.g. 17"
-                                    required>
-
-                            </div>
-
-
-                            <!-- Previous CGPA -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Previous CGPA
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="cgpa"
-                                    min="0"
-                                    max="5"
-                                    step="0.01"
-                                    placeholder="e.g. 3.85"
-                                    required>
-
-                            </div>
-
-
-                            <!-- Assignment -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Assignment Score
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="assignment"
-                                    min="0"
-                                    max="20"
-                                    placeholder="Score over 20"
-                                    required>
-
-                            </div>
-
-
-                            <!-- Practical -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Practical Score
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="practical"
-                                    min="0"
-                                    max="20"
-                                    placeholder="Score over 20"
-                                    required>
-
-                            </div>
-
-
-                            <!-- CA -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Continuous Assessment (CA)
-                                </label>
-
-                                <input
-                                    type="number"
-                                    class="form-control"
-                                    name="ca"
-                                    min="0"
-                                    max="20"
-                                    placeholder="Score over 20"
-                                    required>
-
-                            </div>
-
-
-                            <!-- Class Participation -->
-                            <div class="col-md-6 mb-4">
-
-                                <label class="form-label fw-bold">
-                                    Class Participation
-                                </label>
-
-                                <select
-                                    class="form-select"
-                                    name="participation"
-                                    required>
-
-                                    <option value="">
-                                        Select Participation
-                                    </option>
-
-                                    <option value="High">
-                                        High
-                                    </option>
-
-                                    <option value="Medium">
-                                        Medium
-                                    </option>
-
-                                    <option value="Low">
-                                        Low
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Buttons -->
-
-                        <div class="text-center mt-4">
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-lg px-5">
-
-                                Predict Performance
-
-                            </button>
-
-
-                            <a
-                                href="{{ url_for('home') }}"
-                                class="btn btn-outline-secondary btn-lg px-5 ms-2">
-
-                                Cancel
-
-                            </a>
-
-                        </div>
-
-                    </form>
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+
+            <!-- ATTENDANCE -->
+
+            <div class="form-card">
+
+                <div class="form-card-header">
+
+                    <div class="form-section-number">02</div>
+
+                    <div>
+                        <h2>Attendance</h2>
+                        <p>
+                            Provide the number of classes held and attended.
+                            Attendance percentage is calculated automatically.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="classes_held">
+                            Classes Held
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="classes_held"
+                                name="classes_held"
+                                min="1"
+                                placeholder="e.g. 30"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="classes_attended">
+                            Classes Attended
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="classes_attended"
+                                name="classes_attended"
+                                min="0"
+                                placeholder="e.g. 26"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <strong>Attendance calculation</strong>
+
+                    <span>
+                        The system calculates attendance as:
+                        Classes Attended ÷ Classes Held × 100
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACADEMIC PERFORMANCE -->
+
+            <div class="form-card">
+
+                <div class="form-card-header">
+
+                    <div class="form-section-number">03</div>
+
+                    <div>
+                        <h2>Academic Performance</h2>
+                        <p>
+                            Enter the student's current assessment scores.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid three-columns">
+
+                    <div class="form-group">
+
+                        <label for="assignment">
+                            Assignment Score
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="assignment"
+                                name="assignment"
+                                min="0"
+                                max="20"
+                                step="0.01"
+                                placeholder="0 – 20"
+                                required
+                            >
+                            <span>/ 20</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="practical">
+                            Practical Score
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="practical"
+                                name="practical"
+                                min="0"
+                                max="20"
+                                step="0.01"
+                                placeholder="0 – 20"
+                                required
+                            >
+                            <span>/ 20</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="ca">
+                            CA Score
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="ca"
+                                name="ca"
+                                min="0"
+                                max="20"
+                                step="0.01"
+                                placeholder="0 – 20"
+                                required
+                            >
+                            <span>/ 20</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PREVIOUS PERFORMANCE -->
+
+            <div class="form-card">
+
+                <div class="form-card-header">
+
+                    <div class="form-section-number">04</div>
+
+                    <div>
+                        <h2>Previous Academic Performance</h2>
+                        <p>
+                            Previous CGPA provides historical academic context.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="cgpa">
+                            Previous CGPA
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="cgpa"
+                                name="cgpa"
+                                min="0"
+                                max="5"
+                                step="0.01"
+                                placeholder="e.g. 3.45"
+                                required
+                            >
+                            <span>/ 5.00</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="participation">
+                            Class Participation
+                        </label>
+
+                        <select
+                            id="participation"
+                            name="participation"
+                            required
+                        >
+
+                            <option value="" disabled selected>
+                                Select participation level
+                            </option>
+
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="form-submit">
+
+                <div class="submit-note">
+
+                    <span class="security-icon">✓</span>
+
+                    <div>
+                        <strong>Ready to analyse</strong>
+                        <small>
+                            Check the information before generating
+                            the prediction.
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="primary-button submit-button">
+
+                    Generate Prediction
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}

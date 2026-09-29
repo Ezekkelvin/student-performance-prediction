@@ -1,274 +1,184 @@
 {% extends "base.html" %}
 
-{% block title %}
-Home
-{% endblock %}
+{% block title %}Home | Student Performance Prediction{% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
+<section class="hero">
 
-<div class="container py-5">
+    <div class="hero-container">
 
-    <div class="row align-items-center">
+        <div class="hero-content">
 
-        <div class="col-lg-6">
+            <div class="eyebrow">
+                MACHINE LEARNING • ACADEMIC MONITORING
+            </div>
 
-            <h1 class="display-4 fw-bold text-primary">
-
-                Student Performance Prediction System
-
+            <h1>
+                Understand student
+                <span>performance before</span>
+                the final exam.
             </h1>
 
-            <p class="lead mt-4">
-
-                A Machine Learning-based web application designed to
-                predict students' academic performance before the final
-                examination using key academic indicators.
-
+            <p class="hero-description">
+                Use current academic indicators and previous academic
+                performance to generate an early prediction of a student's
+                expected performance.
             </p>
 
-            <p class="text-muted">
+            <div class="hero-actions">
 
-                The system helps lecturers identify students who may be
-                at risk early enough to provide academic support and
-                improve learning outcomes.
-
-            </p>
-
-            <div class="mt-4">
-
-                <a href="{{ url_for('predict') }}"
-                   class="btn btn-primary btn-lg me-3">
-
+                <a href="{{ url_for('predict') }}" class="primary-button">
                     Start Prediction
-
+                    <span>→</span>
                 </a>
 
-                <a href="{{ url_for('about') }}"
-                   class="btn btn-outline-primary btn-lg">
-
+                <a href="{{ url_for('about') }}" class="secondary-button">
                     Learn More
-
                 </a>
 
             </div>
 
-        </div>
-
-        <div class="col-lg-6 text-center">
-
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
-                 class="img-fluid"
-                 style="max-height:380px;">
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Statistics -->
-
-<div class="container mb-5">
-
-    <div class="row g-4">
-
-        <div class="col-md-3">
-
-            <div class="card shadow text-center p-4">
-
-                <h1 class="text-primary">
-
-                    1000+
-
-                </h1>
-
-                <h5>
-
-                    Student Records
-
-                </h5>
-
+            <div class="hero-note">
+                <span class="status-dot"></span>
+                Prediction generated using a trained machine learning model
             </div>
 
         </div>
 
-        <div class="col-md-3">
 
-            <div class="card shadow text-center p-4">
+        <div class="hero-visual">
 
-                <h1 class="text-success">
+            <div class="prediction-card">
 
-                    2
+                <div class="card-top">
+                    <span>Performance Overview</span>
+                    <span class="live-badge">MODEL ACTIVE</span>
+                </div>
 
-                </h1>
+                <div class="score-display">
 
-                <h5>
+                    <div class="score-circle">
+                        <div>
+                            <strong>91%</strong>
+                            <small>Confidence</small>
+                        </div>
+                    </div>
 
-                    ML Algorithms
+                    <div class="score-info">
+                        <span>Predicted Performance</span>
+                        <strong>Excellent</strong>
+                        <small>Based on current indicators</small>
+                    </div>
 
-                </h5>
+                </div>
 
-            </div>
 
-        </div>
+                <div class="mini-metrics">
 
-        <div class="col-md-3">
+                    <div>
+                        <span>Attendance</span>
+                        <strong>92%</strong>
+                    </div>
 
-            <div class="card shadow text-center p-4">
+                    <div>
+                        <span>CA Score</span>
+                        <strong>17/20</strong>
+                    </div>
 
-                <h1 class="text-warning">
-
-                    3
-
-                </h1>
-
-                <h5>
-
-                    Prediction Classes
-
-                </h5>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-3">
-
-            <div class="card shadow text-center p-4">
-
-                <h1 class="text-danger">
-
-                    Real-Time
-
-                </h1>
-
-                <h5>
-
-                    Prediction
-
-                </h5>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Features -->
-
-<div class="container py-5">
-
-    <div class="text-center mb-5">
-
-        <h2 class="fw-bold">
-
-            System Features
-
-        </h2>
-
-        <p class="text-muted">
-
-            Key capabilities of the Student Performance Prediction System.
-
-        </p>
-
-    </div>
-
-    <div class="row g-4">
-
-        <div class="col-md-4">
-
-            <div class="card h-100 shadow">
-
-                <div class="card-body">
-
-                    <h3 class="text-primary">
-
-                    
-
-                    </h3>
-
-                    <h4>
-
-                        Early Prediction
-
-                    </h4>
-
-                    <p>
-
-                        Predict students' academic performance before
-                        the final examination using continuous academic
-                        records.
-
-                    </p>
+                    <div>
+                        <span>CGPA</span>
+                        <strong>4.21</strong>
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
 
-        <div class="col-md-4">
-
-            <div class="card h-100 shadow">
-
-                <div class="card-body">
-
-                    <h3 class="text-success">
-
-                    
-
-                    </h3>
-
-                    <h4>
-
-                        Machine Learning
-
-                    </h4>
-
-                    <p>
-
-                        Uses Logistic Regression and Random Forest
-                        algorithms to provide intelligent predictions.
-
-                    </p>
-
+            <div class="floating-card floating-card-one">
+                <span class="floating-icon">01</span>
+                <div>
+                    <strong>Enter Data</strong>
+                    <small>Academic indicators</small>
                 </div>
-
             </div>
 
-        </div>
 
-        <div class="col-md-4">
-
-            <div class="card h-100 shadow">
-
-                <div class="card-body">
-
-                    <h3 class="text-danger">
-
-                    
-
-                    </h3>
-
-                    <h4>
-
-                        Early Intervention
-
-                    </h4>
-
-                    <p>
-
-                        Enables lecturers to identify at-risk students
-                        and provide support before examinations.
-
-                    </p>
-
+            <div class="floating-card floating-card-two">
+                <span class="floating-icon">02</span>
+                <div>
+                    <strong>Get Prediction</strong>
+                    <small>Instant model result</small>
                 </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="features-section">
+
+    <div class="section-container">
+
+        <div class="section-heading">
+            <span class="eyebrow">HOW IT WORKS</span>
+
+            <h2>
+                From student data to
+                <span>actionable insight.</span>
+            </h2>
+
+            <p>
+                The system analyses selected academic indicators and uses
+                machine learning to estimate the student's performance level.
+            </p>
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-number">01</div>
+
+                <h3>Enter Student Data</h3>
+
+                <p>
+                    Provide attendance, assessment scores, previous CGPA
+                    and class participation information.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-number">02</div>
+
+                <h3>Machine Learning Analysis</h3>
+
+                <p>
+                    The trained model processes the information and identifies
+                    the most likely performance category.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-number">03</div>
+
+                <h3>View Prediction</h3>
+
+                <p>
+                    Receive a predicted performance category together with
+                    the model's estimated confidence.
+                </p>
 
             </div>
 
@@ -276,121 +186,81 @@ Home
 
     </div>
 
-</div>
+</section>
 
-<!-- How It Works -->
 
-<div class="container py-5">
+<section class="categories-section">
 
-    <div class="text-center mb-5">
+    <div class="section-container">
 
-        <h2 class="fw-bold">
+        <div class="section-heading centered">
+            <span class="eyebrow">PREDICTION CATEGORIES</span>
 
-            How It Works
-
-        </h2>
-
-    </div>
-
-    <div class="row text-center">
-
-        <div class="col-md-3">
-
-            <div class="card shadow p-4">
-
-                <h1 class="text-primary">
-
-                    1
-
-                </h1>
-
-                <h5>
-
-                    Enter Student Data
-
-                </h5>
-
-            </div>
-
+            <h2>
+                Three performance
+                <span>outcomes.</span>
+            </h2>
         </div>
 
-        <div class="col-md-3">
 
-            <div class="card shadow p-4">
+        <div class="category-grid">
 
-                <h1 class="text-success">
-
-                    2
-
-                </h1>
-
-                <h5>
-
-                    Machine Learning Analysis
-
-                </h5>
-
+            <div class="category-card risk">
+                <div class="category-label">01</div>
+                <h3>At Risk</h3>
+                <p>
+                    Indicates that current academic indicators suggest
+                    additional academic attention may be required.
+                </p>
             </div>
 
-        </div>
 
-        <div class="col-md-3">
-
-            <div class="card shadow p-4">
-
-                <h1 class="text-warning">
-
-                    3
-
-                </h1>
-
-                <h5>
-
-                    Generate Prediction
-
-                </h5>
-
+            <div class="category-card average">
+                <div class="category-label">02</div>
+                <h3>Average</h3>
+                <p>
+                    Indicates a moderate expected performance based on
+                    the information provided.
+                </p>
             </div>
 
-        </div>
 
-        <div class="col-md-3">
-
-            <div class="card shadow p-4">
-
-                <h1 class="text-danger">
-
-                    4
-
-                </h1>
-
-                <h5>
-
-                    Academic Recommendation
-
-                </h5>
-
+            <div class="category-card excellent">
+                <div class="category-label">03</div>
+                <h3>Excellent</h3>
+                <p>
+                    Indicates strong current academic indicators and a
+                    higher expected performance level.
+                </p>
             </div>
 
         </div>
 
     </div>
 
-</div>
+</section>
 
-<!-- Footer -->
 
-<div class="container mt-5 mb-3">
+<section class="cta-section">
 
-    <hr>
+    <div class="cta-container">
 
-    <p class="text-center text-muted">
+        <div>
+            <span class="eyebrow">READY TO BEGIN?</span>
 
-        Student Performance Prediction System using Machine Learning |
-        Final Year Project | Software Engineering
+            <h2>
+                Generate a student
+                performance prediction.
+            </h2>
+        </div>
 
-    </p>
+        <a href="{{ url_for('predict') }}" class="primary-button">
+            Start Prediction
+            <span>→</span>
+        </a>
 
-</div>
+    </div>
+
+</section>
 
 {% endblock %}

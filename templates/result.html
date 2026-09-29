@@ -1,197 +1,209 @@
 {% extends "base.html" %}
 
-{% block title %}
-Prediction Result
-{% endblock %}
+{% block title %}Prediction Result | Student Performance{% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
+<section class="result-header">
 
-    <!-- Page Heading -->
-    <div class="text-center mb-5">
+    <div class="result-header-container">
 
-        <h1 class="fw-bold text-primary">
-            Prediction Result
-        </h1>
+        <span class="eyebrow">ANALYSIS COMPLETE</span>
 
-        <p class="text-muted">
-            The student's academic information has been successfully analysed.
+        <h1>Prediction Result</h1>
+
+        <p>
+            The machine learning model has analysed the submitted
+            academic information.
         </p>
 
     </div>
 
-
-    <!-- Student Information -->
-    <div class="card shadow mb-4">
-
-        <div class="card-header bg-primary text-white">
-
-            <h4 class="mb-0">
-                Student Information
-            </h4>
-
-        </div>
-
-        <div class="card-body">
-
-            <table class="table table-bordered table-striped">
-
-                <tr>
-                    <th width="40%">Student Level</th>
-                    <td>{{ level }}</td>
-                </tr>
-
-                <tr>
-                    <th>Attendance</th>
-                    <td>{{ attendance }}%</td>
-                </tr>
-
-                <tr>
-                    <th>Assignment Score</th>
-                    <td>{{ assignment }}</td>
-                </tr>
-
-                <tr>
-                    <th>Practical Score</th>
-                    <td>{{ practical }}</td>
-                </tr>
-
-                <tr>
-                    <th>Continuous Assessment</th>
-                    <td>{{ ca }}</td>
-                </tr>
-
-                <tr>
-                    <th>Previous CGPA</th>
-                    <td>{{ cgpa }}</td>
-                </tr>
-
-                <tr>
-                    <th>Class Participation</th>
-                    <td>{{ participation }}</td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>
+</section>
 
 
-    <!-- Analysis Summary -->
-    <div class="card shadow mb-5">
+<section class="result-section">
 
-        <div class="card-header bg-secondary text-white">
+    <div class="result-container">
 
-            <h4 class="mb-0">
-                Analysis Summary
-            </h4>
 
-        </div>
+        <!-- MAIN RESULT -->
 
-        <div class="card-body">
+        <div class="result-main-card">
 
-            <p class="lead">
+            <div class="result-card-top">
 
-                The Machine Learning system analyses the student's
-                academic indicators, including attendance, assignment
-                performance, practical performance, continuous assessment,
-                previous CGPA and class participation.
+                <span>Predicted Performance</span>
 
-            </p>
+                <span class="result-status">
+                    MODEL RESULT
+                </span>
 
-            <p>
+            </div>
 
-                These indicators are used to estimate the student's
-                expected academic performance before the final examination.
 
-            </p>
+            <div class="result-main-content">
 
-            <div class="alert alert-info">
+                <div class="prediction-icon
+                    {% if prediction == 'Excellent' %}
+                        prediction-excellent
+                    {% elif prediction == 'Average' %}
+                        prediction-average
+                    {% else %}
+                        prediction-risk
+                    {% endif %}
+                ">
 
-                <strong>
-                    Please scroll down to view the prediction result.
-                </strong>
+                    {% if prediction == 'Excellent' %}
+                        E
+                    {% elif prediction == 'Average' %}
+                        A
+                    {% else %}
+                        R
+                    {% endif %}
+
+                </div>
+
+
+                <div class="prediction-text">
+
+                    <span>Expected Performance Category</span>
+
+                    <h2>{{ prediction }}</h2>
+
+                    <p>
+                        Based on the academic indicators provided,
+                        the model predicts this performance category.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="confidence-section">
+
+                <div class="confidence-header">
+
+                    <span>Model Confidence</span>
+
+                    <strong>{{ confidence }}%</strong>
+
+                </div>
+
+
+                <div class="confidence-bar">
+
+                    <div
+                        class="confidence-progress"
+                        style="width: {{ confidence }}%;"
+                    ></div>
+
+                </div>
+
+                <small>
+                    This represents the highest predicted class probability
+                    returned by the model.
+                </small>
 
             </div>
 
         </div>
 
-    </div>
 
+        <!-- STUDENT INFORMATION -->
 
-    <!-- Space Before Result -->
-    <div style="height: 220px;"></div>
+        <div class="result-card">
 
+            <div class="result-card-header">
 
-    <!-- Prediction Heading -->
-    <div class="text-center mb-4">
-
-        <h1 class="fw-bold text-primary">
-            Predicted Performance
-        </h1>
-
-    </div>
-
-
-    <!-- EXCELLENT -->
-    {% if prediction == "Excellent" %}
-
-    <div class="card shadow-lg border-success">
-
-        <div class="card-header bg-success text-white text-center">
-
-            <h2>
-                Excellent
-            </h2>
-
-        </div>
-
-        <div class="card-body text-center">
-
-            <div style="font-size: 90px;">
-                🟢
-            </div>
-
-            <h2 class="text-success fw-bold">
-                EXCELLENT
-            </h2>
-
-            <p class="lead">
-
-                The model predicts that the student is likely to
-                perform excellently in this course.
-
-            </p>
-
-
-            <div class="alert alert-success">
-
-                <strong>Recommendation:</strong><br>
-
-                Continue maintaining good attendance, consistent study
-                habits and active participation in class.
+                <div>
+                    <span class="eyebrow">STUDENT PROFILE</span>
+                    <h3>Submitted Information</h3>
+                </div>
 
             </div>
 
 
-            <hr>
+            <div class="result-data-grid">
+
+                <div class="result-data-item">
+
+                    <span>Level</span>
+
+                    <strong>{{ level }}</strong>
+
+                </div>
 
 
-            <!-- Confidence -->
-            <h4>
-                Prediction Confidence
-            </h4>
+                <div class="result-data-item">
 
-            <div class="progress" style="height: 35px;">
+                    <span>Attendance</span>
 
-                <div
-                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    style="width: {{ confidence }}%;">
+                    <strong>{{ attendance }}%</strong>
 
-                    {{ confidence }}%
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Classes Held</span>
+
+                    <strong>{{ classes_held }}</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Classes Attended</span>
+
+                    <strong>{{ classes_attended }}</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Assignment</span>
+
+                    <strong>{{ assignment }}/20</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Practical</span>
+
+                    <strong>{{ practical }}/20</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>CA Score</span>
+
+                    <strong>{{ ca }}/20</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Previous CGPA</span>
+
+                    <strong>{{ cgpa }}/5.00</strong>
+
+                </div>
+
+
+                <div class="result-data-item">
+
+                    <span>Participation</span>
+
+                    <strong>{{ participation }}</strong>
 
                 </div>
 
@@ -199,168 +211,76 @@ Prediction Result
 
         </div>
 
-    </div>
 
+        <!-- INTERPRETATION -->
 
-    <!-- AVERAGE -->
-    {% elif prediction == "Average" %}
+        <div class="interpretation-card">
 
-    <div class="card shadow-lg border-warning">
-
-        <div class="card-header bg-warning text-dark text-center">
-
-            <h2>
-                Average
-            </h2>
-
-        </div>
-
-        <div class="card-body text-center">
-
-            <div style="font-size: 90px;">
-                🟡
+            <div class="interpretation-icon">
+                i
             </div>
 
-            <h2 class="text-warning fw-bold">
-                AVERAGE
-            </h2>
+            <div>
 
-            <p class="lead">
+                <h3>How to interpret this result</h3>
 
-                The model predicts that the student is likely to
-                achieve an average academic performance.
+                {% if prediction == 'Excellent' %}
 
-            </p>
+                    <p>
+                        The current academic indicators suggest a strong
+                        expected performance. The result reflects the
+                        information supplied to the model and should be
+                        considered an academic monitoring aid.
+                    </p>
 
+                {% elif prediction == 'Average' %}
 
-            <div class="alert alert-warning">
+                    <p>
+                        The current academic indicators suggest a moderate
+                        expected performance. Continued monitoring of the
+                        student's academic progress may be useful.
+                    </p>
 
-                <strong>Recommendation:</strong><br>
+                {% else %}
 
-                Improve attendance, coursework and revision in order
-                to increase the likelihood of achieving better results.
+                    <p>
+                        The current academic indicators suggest that the
+                        student may require additional academic attention.
+                        The result can be used to support early monitoring
+                        and intervention.
+                    </p>
 
-            </div>
-
-
-            <hr>
-
-
-            <!-- Confidence -->
-            <h4>
-                Prediction Confidence
-            </h4>
-
-            <div class="progress" style="height: 35px;">
-
-                <div
-                    class="progress-bar bg-warning text-dark progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    style="width: {{ confidence }}%;">
-
-                    {{ confidence }}%
-
-                </div>
+                {% endif %}
 
             </div>
 
         </div>
 
-    </div>
 
+        <!-- ACTIONS -->
 
-    <!-- AT RISK -->
-    {% else %}
+        <div class="result-actions">
 
-    <div class="card shadow-lg border-danger">
+            <a
+                href="{{ url_for('predict') }}"
+                class="primary-button"
+            >
+                New Prediction
+                <span>→</span>
+            </a>
 
-        <div class="card-header bg-danger text-white text-center">
-
-            <h2>
-                At Risk
-            </h2>
-
-        </div>
-
-        <div class="card-body text-center">
-
-            <div style="font-size: 90px;">
-                🔴
-            </div>
-
-            <h2 class="text-danger fw-bold">
-                AT RISK
-            </h2>
-
-            <p class="lead">
-
-                The model predicts that the student may be at risk
-                of poor academic performance.
-
-            </p>
-
-
-            <div class="alert alert-danger">
-
-                <strong>Recommendation:</strong><br>
-
-                Immediate academic intervention is recommended.
-                The student should improve attendance, coursework
-                and participation and seek academic support before
-                the final examination.
-
-            </div>
-
-
-            <hr>
-
-
-            <!-- Confidence -->
-            <h4>
-                Prediction Confidence
-            </h4>
-
-            <div class="progress" style="height: 35px;">
-
-                <div
-                    class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    style="width: {{ confidence }}%;">
-
-                    {{ confidence }}%
-
-                </div>
-
-            </div>
+            <a
+                href="{{ url_for('home') }}"
+                class="secondary-button"
+            >
+                Back to Home
+            </a>
 
         </div>
 
-    </div>
-
-    {% endif %}
-
-
-    <!-- Buttons -->
-    <div class="text-center mt-5 mb-5">
-
-        <a
-            href="{{ url_for('predict') }}"
-            class="btn btn-primary btn-lg me-3">
-
-            Predict Another Student
-
-        </a>
-
-        <a
-            href="{{ url_for('home') }}"
-            class="btn btn-outline-secondary btn-lg">
-
-            Return Home
-
-        </a>
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}
