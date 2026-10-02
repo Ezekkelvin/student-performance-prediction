@@ -1,16 +1,40 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
+import resend
+
+from dotenv import load_dotenv
+from course_lecturers import COURSE_LECTURERS
+
+
+# =========================================
+# LOAD ENVIRONMENT VARIABLES
+# =========================================
+
+load_dotenv()
+
+resend.api_key = os.getenv("RESEND_API_KEY")
+
+
+# =========================================
+# FLASK APPLICATION
+# =========================================
 
 app = Flask(__name__)
 
 
-# Load the trained Machine Learning model
+# =========================================
+# LOAD MACHINE LEARNING MODEL
+# =========================================
+
 model = joblib.load("student_performance_model.pkl")
 
 
-# Convert participation values into the same
-# numerical values used during model training
+# =========================================
+# CLASS PARTICIPATION MAPPING
+# =========================================
+
 PARTICIPATION_MAPPING = {
     "Low": 0,
     "Medium": 1,
@@ -18,19 +42,28 @@ PARTICIPATION_MAPPING = {
 }
 
 
-# HOME PAGE
+# =========================================
+# HOME
+# =========================================
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# ABOUT PAGE
+# =========================================
+# ABOUT
+# =========================================
+
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 
-# PREDICTION PAGE
+# =========================================
+# PREDICTION
+# =========================================
+
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
 
@@ -38,232 +71,331 @@ def predict():
 
         try:
 
-            # Student Information
+            # -----------------------------
+            # STUDENT INFORMATION
+            # -----------------------------
 
+            student_id = request.form["student_id"]
             level = request.form["level"]
+            course = request.form["course"]
 
+            # -----------------------------
+            # ATTENDANCE
+            # -----------------------------
 
-            # Attendance Information
+            classes_held = int(request.form["classes_held"])
+            classes_attended = int(request.form["classes_attended"])
 
-            classes_held = int(
-                request.form["classes_held"]
-            )
+            # -----------------------------
+            # ACADEMIC PERFORMANCE
+            # -----------------------------
 
-            classes_attended = int(
-                request.form["classes_attended"]
-            )
+            assignment = float(request.form["assignment"])
+            practical = float(request.form["practical"])
+            ca = float(request.form["ca"])
 
+            # -----------------------------
+            # PREVIOUS PERFORMANCE
+            # -----------------------------
 
-            # Validate attendance
+            cgpa = float(request.form["cgpa"])
+
+            # -----------------------------
+            # PARTICIPATION
+            # -----------------------------
+
+            participation = request.form["participation"]
+
+            # -----------------------------
+            # VALIDATE ATTENDANCE
+            # -----------------------------
 
             if classes_held <= 0:
-
-                return """
-                <h3>Error</h3>
-                <p>Number of classes held must be greater than zero.</p>
-                <a href="/predict">Go Back</a>
-                """
-
+                return "Error: Number of classes held must be greater than 0."
 
             if classes_attended < 0:
-
-                return """
-                <h3>Error</h3>
-                <p>Classes attended cannot be negative.</p>
-                <a href="/predict">Go Back</a>
-                """
-
+                return "Error: Classes attended cannot be negative."
 
             if classes_attended > classes_held:
+                return "Error: Classes attended cannot be greater than classes held."
 
-                return """
-                <h3>Error</h3>
-                <p>
-                Classes attended cannot be greater than
-                classes held.
-                </p>
-                <a href="/predict">Go Back</a>
-                """
+            # -----------------------------
+            # CALCULATE ATTENDANCE
+            # -----------------------------
 
-
-            # Calculate attendance automatically
-
-            attendance = (
-                classes_attended / classes_held
-            ) * 100
-
+            attendance = (classes_attended / classes_held) * 100
             attendance = round(attendance, 2)
 
-
-            # Academic Information
-
-            assignment = float(
-                request.form["assignment"]
-            )
-
-            practical = float(
-                request.form["practical"]
-            )
-
-            ca = float(
-                request.form["ca"]
-            )
-
-            cgpa = float(
-                request.form["cgpa"]
-            )
-
-            participation = request.form[
-                "participation"
-            ]
-
-
-            # Validate Scores
+            # -----------------------------
+            # VALIDATE SCORES
+            # -----------------------------
 
             if not 0 <= assignment <= 20:
-
-                return """
-                <h3>Error</h3>
-                <p>Assignment score must be between 0 and 20.</p>
-                <a href="/predict">Go Back</a>
-                """
-
+                return "Error: Assignment score must be between 0 and 20."
 
             if not 0 <= practical <= 20:
-
-                return """
-                <h3>Error</h3>
-                <p>Practical score must be between 0 and 20.</p>
-                <a href="/predict">Go Back</a>
-                """
-
+                return "Error: Practical score must be between 0 and 20."
 
             if not 0 <= ca <= 20:
-
-                return """
-                <h3>Error</h3>
-                <p>CA score must be between 0 and 20.</p>
-                <a href="/predict">Go Back</a>
-                """
-
+                return "Error: CA score must be between 0 and 20."
 
             if not 0 <= cgpa <= 5:
+                return "Error: CGPA must be between 0 and 5."
 
-                return """
-                <h3>Error</h3>
-                <p>CGPA must be between 0 and 5.</p>
-                <a href="/predict">Go Back</a>
-                """
+            # -----------------------------
+            # VALIDATE PARTICIPATION
+            # -----------------------------
 
+            if participation not in PARTICIPATION_MAPPING:
+                return "Error: Invalid class participation value."
 
-            # Encode Participation
+            participation_value = PARTICIPATION_MAPPING[participation]
 
-            participation_value = (
-                PARTICIPATION_MAPPING[
-                    participation
-                ]
-            )
+            # -----------------------------
+            # CHECK COURSE (Keep this to get the lecturer's name)
+            # -----------------------------
 
+            lecturer = COURSE_LECTURERS.get(course)
 
-            # Prepare Model Input
+            if lecturer is None:
+                return "Error: No lecturer is assigned to this course."
 
-            input_data = pd.DataFrame(
-                [[
-                    attendance,
-                    assignment,
-                    practical,
-                    ca,
-                    cgpa,
-                    participation_value
-                ]],
-                columns=[
-                    "Attendance",
-                    "Assignment_Score",
-                    "Practical_Score",
-                    "CA_Score",
-                    "Previous_CGPA",
-                    "Class_Participation"
-                ]
-            )
+            # -----------------------------
+            # PREPARE MODEL INPUT
+            # -----------------------------
 
+            input_data = pd.DataFrame([[
+                attendance,
+                assignment,
+                practical,
+                ca,
+                cgpa,
+                participation_value
+            ]], columns=[
+                "Attendance",
+                "Assignment_Score",
+                "Practical_Score",
+                "CA_Score",
+                "Previous_CGPA",
+                "Class_Participation"
+            ])
 
-            # Make Prediction
+            # -----------------------------
+            # MAKE PREDICTION
+            # -----------------------------
 
-            prediction = model.predict(
-                input_data
-            )[0]
+            prediction = model.predict(input_data)[0]
 
+            # -----------------------------
+            # CALCULATE MODEL CONFIDENCE
+            # -----------------------------
 
-            # Prediction Probability
-
-            probabilities = (
-                model.predict_proba(
-                    input_data
-                )[0]
-            )
+            probabilities = model.predict_proba(input_data)[0]
 
             confidence = round(
                 float(max(probabilities)) * 100,
                 2
             )
 
+            # -----------------------------
+            # LECTURER INFORMATION
+            # -----------------------------
 
-            # Display Result
+            lecturer_name = lecturer["name"]
+
+            # -----------------------------
+            # DISPLAY RESULT
+            # -----------------------------
 
             return render_template(
                 "result.html",
 
-                prediction=prediction,
+                student_id=student_id,
+                level=level,
+                course=course,
 
+                prediction=prediction,
                 confidence=confidence,
 
-                level=level,
+                lecturer_name=lecturer_name,
 
                 attendance=attendance,
-
                 classes_held=classes_held,
-
                 classes_attended=classes_attended,
 
                 assignment=assignment,
-
                 practical=practical,
-
                 ca=ca,
 
                 cgpa=cgpa,
-
                 participation=participation
             )
 
-
         except KeyError as error:
 
-            return f"""
-            <h3>Error: Missing form field</h3>
-            <p>{error}</p>
-            <a href="/predict">Go Back</a>
-            """
-
+            return f"Error: Missing form field: {error}"
 
         except ValueError:
 
-            return """
-            <h3>Error</h3>
-            <p>
-            Please enter valid numbers in the
-            numerical fields.
-            </p>
-            <a href="/predict">Go Back</a>
+            return "Error: Please enter valid numbers in the numeric fields."
+
+    return render_template("predict.html")
+
+
+# =========================================
+# NOTIFY COURSE LECTURER
+# =========================================
+
+@app.route("/notify-lecturer", methods=["POST"])
+def notify_lecturer():
+
+    try:
+
+        # -----------------------------
+        # RECEIVE INFORMATION
+        # -----------------------------
+
+        student_id = request.form["student_id"]
+        course = request.form["course"]
+        prediction = request.form["prediction"]
+        confidence = request.form["confidence"]
+        
+        # -----------------------------
+        # GRAB TYPED EMAIL FROM WEB FORM
+        # -----------------------------
+        
+        lecturer_email = request.form["lecturer_email"]
+
+        # -----------------------------
+        # CHECK COURSE (For Name Only)
+        # -----------------------------
+
+        lecturer = COURSE_LECTURERS.get(course)
+
+        if lecturer is None:
+            return "Error: No lecturer is assigned to this course."
+
+        lecturer_name = lecturer["name"]
+
+        # -----------------------------
+        # ONLY ALLOW AT RISK ALERTS
+        # -----------------------------
+
+        if prediction != "At Risk":
+            return "Notification is only available for students predicted to be At Risk."
+
+        # -----------------------------
+        # CHECK API KEY
+        # -----------------------------
+
+        if not resend.api_key:
+            return "Error: Email service API key has not been configured."
+
+        # -----------------------------
+        # EMAIL CONTENT
+        # -----------------------------
+
+        email_parameters = {
+            "from": "Student Performance System <alerts@eze.name.ng>",
+            "to": [lecturer_email],
+            "subject": (
+                f"Student Performance Alert - {course}"
+            ),
+
+            "html": f"""
+                <div style="
+                    font-family: Arial, sans-serif;
+                    max-width: 650px;
+                    margin: auto;
+                    padding: 30px;
+                    color: #1e293b;
+                ">
+
+                    <h2 style="color: #0f172a;">
+                        Student Performance Intervention Alert
+                    </h2>
+
+                    <p>
+                        Dear {lecturer_name},
+                    </p>
+
+                    <p>
+                        The Student Performance Prediction System
+                        has identified a student who may require
+                        early academic intervention.
+                    </p>
+
+                    <div style="
+                        background: #f8fafc;
+                        padding: 20px;
+                        border-radius: 10px;
+                        margin: 20px 0;
+                    ">
+
+                        <p>
+                            <strong>Student ID:</strong>
+                            {student_id}
+                        </p>
+
+                        <p>
+                            <strong>Course:</strong>
+                            {course}
+                        </p>
+
+                        <p>
+                            <strong>Prediction:</strong>
+                            {prediction}
+                        </p>
+
+                        <p>
+                            <strong>Model Confidence:</strong>
+                            {confidence}%
+                        </p>
+
+                    </div>
+
+                    <p>
+                        Please review the student's academic
+                        situation and provide appropriate
+                        intervention where necessary.
+                    </p>
+
+                    <p>
+                        Regards,<br>
+                        <strong>Class Advisor</strong><br>
+                        Student Performance Prediction System
+                    </p>
+
+                </div>
             """
+        }
+
+        print(f"---- DEBUG: Sending email to: {lecturer_email} ----")
+
+        # -----------------------------
+        # SEND EMAIL 
+        # -----------------------------
+
+        resend.Emails.send(email_parameters)
+
+        # -----------------------------
+        # SHOW SUCCESS PAGE
+        # -----------------------------
+
+        return render_template(
+            "notification_success.html",
+
+            student_id=student_id,
+            course=course,
+            lecturer_name=lecturer_name
+        )
+
+    except Exception as error:
+
+        return f"SYSTEM CHECK ERROR: {error}"
 
 
-    return render_template(
-        "predict.html"
-    )
-
-
-# RUN APPLICATION
+# APPLICATION START
 
 if __name__ == "__main__":
     app.run()

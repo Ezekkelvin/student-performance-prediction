@@ -1,28 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}About | Student Performance Prediction{% endblock %}
-
 {% block content %}
 
-<section class="page-header about-header">
+<section class="page-header">
 
-    <div class="page-header-container">
+    <div class="container">
 
-        <div>
+        <span class="eyebrow">
+            ABOUT THE SYSTEM
+        </span>
 
-            <span class="eyebrow">ABOUT THE SYSTEM</span>
+        <h1>
+            Student Performance Prediction System
+        </h1>
 
-            <h1>
-                Student Performance
-                Prediction System
-            </h1>
-
-            <p>
-                A machine learning-based web application designed to
-                support early monitoring of student academic performance.
-            </p>
-
-        </div>
+        <p>
+            A machine learning-based web application designed
+            to support student performance monitoring and early
+            academic intervention.
+        </p>
 
     </div>
 
@@ -31,89 +27,64 @@
 
 <section class="about-section">
 
-    <div class="about-container">
+    <div class="container">
 
 
-        <div class="about-introduction">
+        <!-- =====================================
+             OVERVIEW
+        ====================================== -->
 
-            <span class="eyebrow">PROJECT OVERVIEW</span>
+        <div class="about-intro">
+
+            <span class="eyebrow">
+                SYSTEM OVERVIEW
+            </span>
 
             <h2>
-                Turning academic data into
-                <span>early insight.</span>
+                From prediction to early intervention
             </h2>
 
             <p>
-                Traditional academic evaluation often relies heavily on
-                examination results that become available after an
-                assessment has already taken place. This system explores
-                the use of machine learning to provide an earlier indication
-                of expected student performance.
+                The system uses machine learning to predict a
+                student's likely performance category before
+                the final examination. The Class Advisor enters
+                the student's academic information and receives
+                a prediction of Excellent, Average or At Risk.
             </p>
 
             <p>
-                The application accepts selected academic indicators and
-                processes them through a trained classification model.
-                The resulting prediction is presented through a web-based
-                interface.
+                When a student is classified as At Risk, the
+                system provides an early intervention feature
+                that allows the Class Advisor to notify the
+                lecturer responsible for the selected course.
+                This supports timely review and possible
+                academic intervention.
             </p>
 
         </div>
 
 
-        <div class="about-stats">
-
-            <div class="about-stat">
-
-                <strong>06</strong>
-
-                <span>
-                    Academic input
-                    features
-                </span>
-
-            </div>
-
-
-            <div class="about-stat">
-
-                <strong>03</strong>
-
-                <span>
-                    Performance
-                    categories
-                </span>
-
-            </div>
-
-
-            <div class="about-stat">
-
-                <strong>ML</strong>
-
-                <span>
-                    Classification
-                    approach
-                </span>
-
-            </div>
-
-        </div>
-
+        <!-- =====================================
+             FEATURES
+        ====================================== -->
 
         <div class="about-grid">
 
 
             <div class="about-card">
 
-                <div class="about-card-number">01</div>
+                <span class="about-number">
+                    01
+                </span>
 
-                <h3>Academic Indicators</h3>
+                <h3>
+                    Machine Learning
+                </h3>
 
                 <p>
-                    The system uses attendance, assignment score,
-                    practical score, CA score, previous CGPA and
-                    class participation.
+                    The system uses a trained machine learning
+                    classification model to predict student
+                    performance.
                 </p>
 
             </div>
@@ -121,14 +92,18 @@
 
             <div class="about-card">
 
-                <div class="about-card-number">02</div>
+                <span class="about-number">
+                    02
+                </span>
 
-                <h3>Machine Learning</h3>
+                <h3>
+                    Performance Monitoring
+                </h3>
 
                 <p>
-                    Classification algorithms are used to analyse
-                    student information and predict an expected
-                    performance category.
+                    Academic indicators such as attendance,
+                    assessment scores, previous CGPA and class
+                    participation are analysed.
                 </p>
 
             </div>
@@ -136,14 +111,17 @@
 
             <div class="about-card">
 
-                <div class="about-card-number">03</div>
+                <span class="about-number">
+                    03
+                </span>
 
-                <h3>Web Application</h3>
+                <h3>
+                    Early Intervention
+                </h3>
 
                 <p>
-                    Flask provides the web application layer through
-                    which users enter student information and view
-                    prediction results.
+                    Students identified as At Risk can be
+                    flagged for possible academic intervention.
                 </p>
 
             </div>
@@ -151,14 +129,18 @@
 
             <div class="about-card">
 
-                <div class="about-card-number">04</div>
+                <span class="about-number">
+                    04
+                </span>
 
-                <h3>Early Monitoring</h3>
+                <h3>
+                    Lecturer Notification
+                </h3>
 
                 <p>
-                    The system is intended to support earlier awareness
-                    of potential academic performance issues before
-                    final examination results are available.
+                    The Class Advisor can notify the lecturer
+                    responsible for the selected course when
+                    intervention may be required.
                 </p>
 
             </div>
@@ -166,25 +148,49 @@
         </div>
 
 
-        <div class="technology-card">
+        <!-- =====================================
+             TECHNOLOGY
+        ====================================== -->
 
-            <div>
+        <div class="technology-section">
 
-                <span class="eyebrow">TECHNOLOGY STACK</span>
+            <span class="eyebrow">
+                TECHNOLOGY
+            </span>
 
-                <h3>Built with a lightweight web architecture.</h3>
-
-            </div>
-
+            <h2>
+                System Technologies
+            </h2>
 
             <div class="technology-list">
 
-                <span>Python</span>
-                <span>Flask</span>
-                <span>Scikit-learn</span>
-                <span>Pandas</span>
-                <span>HTML</span>
-                <span>CSS</span>
+                <span>
+                    Python
+                </span>
+
+                <span>
+                    Flask
+                </span>
+
+                <span>
+                    Scikit-learn
+                </span>
+
+                <span>
+                    Pandas
+                </span>
+
+                <span>
+                    HTML
+                </span>
+
+                <span>
+                    CSS
+                </span>
+
+                <span>
+                    Resend Email API
+                </span>
 
             </div>
 

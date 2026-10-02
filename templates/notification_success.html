@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="notification-success">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <span class="eyebrow">
+            EARLY INTERVENTION
+        </span>
+
+        <h1>
+            Lecturer Notified
+        </h1>
+
+        <p>
+            The performance alert has been sent to the
+            lecturer responsible for this course.
+        </p>
+
+
+        <div class="notification-details">
+
+            <div>
+
+                <span>
+                    Student ID
+                </span>
+
+                <strong>
+                    {{ student_id }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Course
+                </span>
+
+                <strong>
+                    {{ course }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Lecturer
+                </span>
+
+                <strong>
+                    {{ lecturer_name }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Status
+                </span>
+
+                <strong>
+                    Notification Sent
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('predict') }}"
+            class="btn btn-primary"
+        >
+            Make Another Prediction
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
