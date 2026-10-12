@@ -1,0 +1,369 @@
+
+{% extends 'base.html' %}
+
+{% block title %}About | Student Performance Prediction System{% endblock %}
+
+{% block head %}
+<style>
+/* About page styles are also available in static/CSS/style.css. */
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="about-page">
+
+    <div class="about-hero">
+        <div class="about-hero-copy">
+            <span class="about-eyebrow">
+                ABOUT THE PROJECT
+            </span>
+
+            <h1>
+                Helping students succeed
+                <span>before problems grow.</span>
+            </h1>
+
+            <p class="about-hero-description">
+                The Machine Learning-Based Student Performance Prediction
+                System combines attendance records and academic indicators
+                to help identify students who may benefit from timely
+                academic support.
+            </p>
+
+            <div class="about-hero-actions">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role == 'advisor' %}
+                        <a class="about-button about-button-primary"
+                           href="{{ url_for('predict') }}">
+                            Make a prediction
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% elif current_user.role == 'student' %}
+                        <a class="about-button about-button-primary"
+                           href="{{ url_for('student_dashboard') }}">
+                            Open student dashboard
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% elif current_user.role == 'lecturer' %}
+                        <a class="about-button about-button-primary"
+                           href="{{ url_for('lecturer_dashboard') }}">
+                            Open lecturer dashboard
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% elif current_user.role == 'admin' %}
+                        <a class="about-button about-button-primary"
+                           href="{{ url_for('admin_dashboard') }}">
+                            Open administration
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a class="about-button about-button-primary"
+                       href="{{ url_for('register') }}">
+                        Get started
+                        <span aria-hidden="true">→</span>
+                    </a>
+                    <a class="about-button about-button-secondary"
+                       href="{{ url_for('login') }}">
+                        Sign in
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="about-hero-visual" aria-label="System overview">
+            <div class="about-orbit about-orbit-one"></div>
+            <div class="about-orbit about-orbit-two"></div>
+
+            <div class="about-visual-card">
+                <div class="about-visual-top">
+                    <span class="about-status-dot"></span>
+                    <span>Performance overview</span>
+                    <span class="about-visual-menu">•••</span>
+                </div>
+
+                <div class="about-visual-icon">↗</div>
+
+                <h2>Early insight. Better support.</h2>
+                <p>
+                    Bring attendance and academic indicators together
+                    to guide informed decisions.
+                </p>
+
+                <div class="about-visual-divider"></div>
+
+                <div class="about-visual-metric">
+                    <div>
+                        <span>Attendance</span>
+                        <strong>Course-based</strong>
+                    </div>
+                    <div>
+                        <span>Prediction</span>
+                        <strong>Data-informed</strong>
+                    </div>
+                </div>
+
+                <div class="about-visual-bars" aria-hidden="true">
+                    <span style="height: 38%"></span>
+                    <span style="height: 55%"></span>
+                    <span style="height: 47%"></span>
+                    <span style="height: 72%"></span>
+                    <span style="height: 62%"></span>
+                    <span style="height: 88%"></span>
+                    <span style="height: 76%"></span>
+                    <span style="height: 100%"></span>
+                </div>
+                <p class="about-visual-caption">
+                    Illustrative visual — not actual student data
+                </p>
+            </div>
+
+            <div class="about-floating-note about-floating-note-top">
+                <span class="about-floating-icon">✓</span>
+                <span>
+                    <strong>Attendance tracking</strong>
+                    <small>Session-by-session records</small>
+                </span>
+            </div>
+
+            <div class="about-floating-note about-floating-note-bottom">
+                <span class="about-floating-icon about-floating-icon-blue">✦</span>
+                <span>
+                    <strong>Early intervention</strong>
+                    <small>Support when it matters</small>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="about-section">
+        <div class="about-section-heading">
+            <span class="about-eyebrow">WHAT THE SYSTEM DOES</span>
+            <h2>One platform, four essential capabilities.</h2>
+            <p>
+                Connect classroom activity, academic records, prediction,
+                and intervention in one organized workflow.
+            </p>
+        </div>
+
+        <div class="about-feature-grid">
+            <article class="about-feature-card">
+                <div class="about-feature-icon about-icon-blue">01</div>
+                <h3>Attendance management</h3>
+                <p>
+                    Lecturers schedule classes, open attendance registers,
+                    review student claims, and finalize each session.
+                </p>
+            </article>
+
+            <article class="about-feature-card">
+                <div class="about-feature-icon about-icon-purple">02</div>
+                <h3>Performance prediction</h3>
+                <p>
+                    The trained machine learning model evaluates six
+                    pre-exam features to estimate a student's performance
+                    category.
+                </p>
+            </article>
+
+            <article class="about-feature-card">
+                <div class="about-feature-icon about-icon-green">03</div>
+                <h3>Academic monitoring</h3>
+                <p>
+                    Class Advisors select an enrolled student and course,
+                    then review the relevant academic indicators alongside
+                    calculated attendance.
+                </p>
+            </article>
+
+            <article class="about-feature-card">
+                <div class="about-feature-icon about-icon-orange">04</div>
+                <h3>Early intervention</h3>
+                <p>
+                    When a current prediction is At Risk, a Class Advisor
+                    can choose to notify the lecturer assigned to that
+                    course by email.
+                </p>
+            </article>
+        </div>
+    </section>
+
+
+    <section class="about-model-section">
+        <div class="about-model-copy">
+            <span class="about-eyebrow">THE PREDICTION MODEL</span>
+            <h2>Six inputs. One consistent feature order.</h2>
+            <p>
+                The prediction uses attendance and academic indicators
+                that are available before final examinations. Student
+                identity and level help identify the record but are not
+                inputs to the model.
+            </p>
+
+            <div class="about-model-note">
+                <span class="about-note-icon">i</span>
+                <p>
+                    Attendance is calculated from confirmed presence in
+                    finalized class sessions for the selected course.
+                    Open sessions do not count in the denominator.
+                </p>
+            </div>
+        </div>
+
+        <div class="about-model-list">
+            <div class="about-model-item">
+                <span class="about-model-number">01</span>
+                <div>
+                    <strong>Attendance percentage</strong>
+                    <small>Confirmed attendance across finalized sessions</small>
+                </div>
+                <span class="about-model-tag">%</span>
+            </div>
+
+            <div class="about-model-item">
+                <span class="about-model-number">02</span>
+                <div>
+                    <strong>Assignment score</strong>
+                    <small>Course assignment performance</small>
+                </div>
+                <span class="about-model-tag">/20</span>
+            </div>
+
+            <div class="about-model-item">
+                <span class="about-model-number">03</span>
+                <div>
+                    <strong>Practical score</strong>
+                    <small>Practical assessment performance</small>
+                </div>
+                <span class="about-model-tag">/20</span>
+            </div>
+
+            <div class="about-model-item">
+                <span class="about-model-number">04</span>
+                <div>
+                    <strong>CA score</strong>
+                    <small>Continuous assessment performance</small>
+                </div>
+                <span class="about-model-tag">/20</span>
+            </div>
+
+            <div class="about-model-item">
+                <span class="about-model-number">05</span>
+                <div>
+                    <strong>Previous CGPA</strong>
+                    <small>Previously recorded cumulative performance</small>
+                </div>
+                <span class="about-model-tag">/5</span>
+            </div>
+
+            <div class="about-model-item">
+                <span class="about-model-number">06</span>
+                <div>
+                    <strong>Class participation</strong>
+                    <small>Low = 0 · Medium = 1 · High = 2</small>
+                </div>
+                <span class="about-model-tag">Level</span>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="about-section">
+        <div class="about-section-heading">
+            <span class="about-eyebrow">HOW IT WORKS</span>
+            <h2>From classroom activity to timely support.</h2>
+            <p>
+                Each role contributes to a clear process, with permissions
+                that limit users to the tasks they are allowed to perform.
+            </p>
+        </div>
+
+        <div class="about-workflow">
+            <article class="about-workflow-step">
+                <div class="about-workflow-marker">1</div>
+                <div>
+                    <h3>Record attendance</h3>
+                    <p>
+                        Lecturers schedule sessions and manage attendance
+                        registers for their assigned courses.
+                    </p>
+                </div>
+            </article>
+
+            <article class="about-workflow-step">
+                <div class="about-workflow-marker">2</div>
+                <div>
+                    <h3>Review academic indicators</h3>
+                    <p>
+                        The Class Advisor selects a student and enrolled
+                        course and supplies or verifies the available
+                        academic scores.
+                    </p>
+                </div>
+            </article>
+
+            <article class="about-workflow-step">
+                <div class="about-workflow-marker">3</div>
+                <div>
+                    <h3>Generate a prediction</h3>
+                    <p>
+                        The model combines the six features and returns a
+                        performance category and its prediction confidence.
+                    </p>
+                </div>
+            </article>
+
+            <article class="about-workflow-step">
+                <div class="about-workflow-marker">4</div>
+                <div>
+                    <h3>Consider intervention</h3>
+                    <p>
+                        For an At Risk result, the Class Advisor can
+                        initiate an email alert to the course lecturer.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <section class="about-technology">
+        <div class="about-technology-heading">
+            <span class="about-eyebrow">BUILT WITH</span>
+            <h2>The technology behind the platform.</h2>
+            <p>
+                A Python-based web application with a database-backed
+                workflow and a machine learning prediction component.
+            </p>
+        </div>
+
+        <div class="about-tech-list">
+            <span>Python</span>
+            <span>Flask</span>
+            <span>Flask-Login</span>
+            <span>SQLAlchemy</span>
+            <span>scikit-learn</span>
+            <span>pandas</span>
+            <span>Joblib</span>
+            <span>Resend Email API</span>
+        </div>
+    </section>
+
+
+    <section class="about-responsible">
+        <div class="about-responsible-icon">◎</div>
+        <div>
+            <span class="about-eyebrow">RESPONSIBLE USE</span>
+            <h2>A prediction is a signal, not a final judgement.</h2>
+            <p>
+                Model outputs should support academic review and timely
+                assistance, not replace a lecturer's or advisor's
+                professional judgement. Prediction confidence is not a
+                guarantee of a student's eventual result.
+            </p>
+        </div>
+    </section>
+
+</section>
+{% endblock %}

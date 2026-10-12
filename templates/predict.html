@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Predict Performance | Student Performance System{% endblock %}
+{% block content %}
+<section class="prediction-section">
+  <div class="container">
+    <header class="page-header prediction-page-header">
+      <span class="eyebrow">EARLY ACADEMIC SUPPORT</span>
+      <h1>Student performance prediction</h1>
+      <p class="hero-description">Select a student and an enrolled course, verify their academic indicators, and generate a prediction using the system's six model features.</p>
+    </header>
+    <form method="get" action="{{ url_for('predict') }}" class="prediction-form">
+      <section class="form-section">
+        <div class="form-section-heading"><span class="section-number">01</span><div><h2>Select student and course</h2><p>Choose the student and course whose performance you want to review.</p></div></div>
+        <div class="form-grid">
+          <div class="form-group"><label for="student_user_id">Student</label><select id="student_user_id" name="student_user_id" required onchange="this.form.submit()"><option value="">Select a student</option>{% for s in students %}<option value="{{ s.id }}" {% if selected_student==s.id %}selected{% endif %}>{{ s.student_id }} — {{ s.full_name }} ({{ s.level }})</option>{% endfor %}</select></div>
+          <div class="form-group"><label for="course_id">Course</label><select id="course_id" name="course_id" required onchange="this.form.submit()"><option value="">Select a course</option>{% for c in courses %}<option value="{{ c.id }}" {% if selected_course==c.id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>
+        </div>
+        <noscript><button class="btn btn-primary" type="submit">Load academic record</button></noscript>
+        {% if not students %}<div class="calculation-note"><strong>No student accounts yet</strong><span>Approved student accounts will appear here after registration.</span></div>{% endif %}
+      </section>
+    </form>
+    {% if selected_student and selected_course %}
+    <form method="post" action="{{ url_for('predict') }}" class="prediction-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="student_user_id" value="{{ selected_student }}"><input type="hidden" name="course_id" value="{{ selected_course }}">
+      <section class="form-section">
+        <div class="form-section-heading"><span class="section-number">02</span><div><h2>Academic indicators</h2><p>Verify the latest available scores before generating the prediction.</p></div></div>
+        <div class="calculation-note"><strong>Attendance is calculated automatically</strong><span>The system uses confirmed attendance divided by finalized class sessions for this course. Open registers are excluded.</span></div>
+        <div class="form-grid academic-form-grid">
+          <div class="form-group"><label for="assignment">Assignment score <span>(0–20)</span></label><input id="assignment" type="number" name="assignment" min="0" max="20" step="0.01" value="{{ record.assignment if record else 0 }}" required></div>
+          <div class="form-group"><label for="practical">Practical score <span>(0–20)</span></label><input id="practical" type="number" name="practical" min="0" max="20" step="0.01" value="{{ record.practical if record else 0 }}" required></div>
+          <div class="form-group"><label for="ca">CA score <span>(0–20)</span></label><input id="ca" type="number" name="ca" min="0" max="20" step="0.01" value="{{ record.ca if record else 0 }}" required></div>
+          <div class="form-group"><label for="cgpa">Previous CGPA <span>(0–5)</span></label><input id="cgpa" type="number" name="cgpa" min="0" max="5" step="0.01" value="{{ record.previous_cgpa if record else 0 }}" required></div>
+          <div class="form-group"><label for="participation">Class participation</label><select id="participation" name="participation" required><option value="Low" {% if not record or record.participation=='Low' %}selected{% endif %}>Low</option><option value="Medium" {% if record and record.participation=='Medium' %}selected{% endif %}>Medium</option><option value="High" {% if record and record.participation=='High' %}selected{% endif %}>High</option></select></div>
+        </div>
+      </section>
+      <div class="form-submit"><div></div><button class="btn btn-primary" type="submit">Generate prediction</button></div>
+    </form>
+    {% else %}
+    <div class="calculation-note"><strong>Next step</strong><span>Choose both a student and a course above to load the academic indicators.</span></div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

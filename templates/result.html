@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Prediction Result | Student Performance System{% endblock %}
+{% block content %}
+<section class="result-page">
+  <header class="result-header"><div class="container"><span class="eyebrow">PREDICTION SUMMARY</span><h1>Performance assessment</h1><p>Review the model's estimate alongside the indicators used. This result supports academic judgement; it does not guarantee a student's outcome.</p></div></header>
+  <div class="container">
+    {% set result_class = 'result-risk' if prediction == 'At Risk' else ('result-average' if prediction == 'Average' else 'result-excellent') %}
+    {% set result_letter = '!' if prediction == 'At Risk' else ('A' if prediction == 'Average' else '✓') %}
+    <section class="result-card {{ result_class }}">
+      <div class="result-main"><div class="result-letter">{{ result_letter }}</div><div class="result-text"><span>MODEL CLASSIFICATION</span><h2>{{ prediction }}</h2><p>Student <strong>{{ student.student_id }}</strong> · {{ course.name }}</p></div></div>
+      <div class="confidence-section"><div class="confidence-label"><span>Model confidence</span><strong>{{ confidence }}%</strong></div><div class="confidence-bar"><div class="confidence-fill" style="width: {{ confidence }}%;"></div></div><small class="field-help">Confidence reflects the model's estimated class probability, not a guarantee of accuracy.</small></div>
+    </section>
+    <section class="result-section"><div class="section-heading"><span class="eyebrow">STUDENT DETAILS</span><h2>Assessment context</h2></div><div class="result-grid">
+      <div class="result-item"><span>Student name</span><strong>{{ student.full_name }}</strong></div><div class="result-item"><span>Student ID</span><strong>{{ student.student_id }}</strong></div><div class="result-item"><span>Level</span><strong>{{ student.level }}</strong></div><div class="result-item"><span>Course</span><strong>{{ course.name }}</strong></div><div class="result-item"><span>Assigned lecturer</span><strong>{{ course.lecturer.full_name if course.lecturer else 'Not assigned' }}</strong></div><div class="result-item"><span>Attendance</span><strong>{{ attendance }}%</strong><small>{{ present }} present / {{ total }} finalized sessions</small></div>
+    </div></section>
+    <section class="result-section"><div class="section-heading"><span class="eyebrow">MODEL INPUTS</span><h2>Indicators used for this prediction</h2></div><div class="result-grid">
+      <div class="result-item"><span>Assignment score</span><strong>{{ assignment }}/20</strong></div><div class="result-item"><span>Practical score</span><strong>{{ practical }}/20</strong></div><div class="result-item"><span>CA score</span><strong>{{ ca }}/20</strong></div><div class="result-item"><span>Previous CGPA</span><strong>{{ cgpa }}/5</strong></div><div class="result-item"><span>Class participation</span><strong>{{ participation }}</strong></div><div class="result-item"><span>Attendance source</span><strong>Finalized registers</strong></div>
+    </div></section>
+    {% if prediction == 'At Risk' %}
+    <section class="intervention-card"><div class="intervention-header"><span class="eyebrow">EARLY INTERVENTION</span><h2>Student may need additional support</h2><p>The model classified this student as At Risk. Review the student's circumstances and, where appropriate, notify the lecturer assigned to this course.</p></div><div class="intervention-details"><div><span>Course</span><strong>{{ course.name }}</strong></div><div><span>Course lecturer</span><strong>{{ course.lecturer.full_name if course.lecturer else 'Not assigned' }}</strong></div></div>{% if course.lecturer %}<form method="post" action="{{ url_for('notify_lecturer') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="student_user_id" value="{{ student.id }}"><input type="hidden" name="course_id" value="{{ course.id }}"><button class="btn btn-primary" type="submit">Send intervention email to assigned lecturer</button><p class="field-help">Email delivery requires a valid Resend API key and sender configuration.</p></form>{% else %}<div class="calculation-note"><strong>No lecturer assigned</strong><span>Ask the administrator to assign a lecturer before sending an intervention email.</span></div>{% endif %}</section>
+    {% endif %}
+    <div class="result-actions"><a class="btn btn-primary" href="{{ url_for('predict') }}">Make another prediction</a><a class="btn btn-secondary" href="{{ url_for('advisor_dashboard') }}">Back to dashboard</a></div>
+  </div>
+</section>
+{% endblock %}

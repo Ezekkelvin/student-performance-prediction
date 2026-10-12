@@ -1,0 +1,483 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Create Account | Student Performance Prediction System{% endblock %}
+
+{% block head %}
+<style>
+  .auth-page {
+    max-width: 900px;
+    margin: 10px auto 50px;
+  }
+
+  .auth-heading {
+    margin-bottom: 26px;
+    text-align: center;
+  }
+
+  .auth-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 7px 12px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .09em;
+  }
+
+  .auth-heading h1 {
+    margin: 0 0 12px;
+    color: #14213d;
+    font-size: clamp(30px, 4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -.035em;
+  }
+
+  .auth-heading p {
+    max-width: 590px;
+    margin: 0 auto;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .auth-card {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 18px 55px rgba(15, 23, 42, .08);
+  }
+
+  .auth-card-top {
+    padding: 24px 32px;
+    border-bottom: 1px solid #e8edf5;
+    background: linear-gradient(120deg, #f8fbff, #eef4ff);
+  }
+
+  .auth-card-top h2 {
+    margin: 0 0 6px;
+    color: #14213d;
+    font-size: 19px;
+  }
+
+  .auth-card-top p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .auth-form {
+    padding: 30px 32px 32px;
+  }
+
+  .auth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px;
+  }
+
+  .auth-field {
+    min-width: 0;
+    margin: 0 0 20px;
+  }
+
+  .auth-field label,
+  .auth-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #26354d;
+    font-size: 13px;
+    font-weight: 750;
+  }
+
+  .auth-field input,
+  .auth-field select {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid #cfd8e6;
+    border-radius: 11px;
+    outline: none;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+    font-size: 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .auth-field input:focus,
+  .auth-field select:focus {
+    border-color: #3973d6;
+    box-shadow: 0 0 0 4px rgba(57, 115, 214, .12);
+  }
+
+  .auth-help {
+    display: block;
+    margin-top: 7px;
+    color: #718096;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .auth-section {
+    margin-top: 8px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #fbfdff;
+  }
+
+  .auth-section-heading {
+    margin-bottom: 20px;
+  }
+
+  .auth-section-heading h3 {
+    margin: 0 0 7px;
+    color: #14213d;
+    font-size: 17px;
+  }
+
+  .auth-section-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .auth-course-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .auth-course-option {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 52px;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #dce4ef;
+    border-radius: 11px;
+    background: #fff;
+    color: #344256;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+  }
+
+  .auth-course-option:hover {
+    border-color: #7aa5ef;
+    background: #f4f8ff;
+  }
+
+  .auth-course-option input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: #245fca;
+    flex-shrink: 0;
+  }
+
+  .auth-notice {
+    margin: 0 0 22px;
+    padding: 14px 16px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .auth-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 26px;
+    padding-top: 24px;
+    border-top: 1px solid #e8edf5;
+  }
+
+  .auth-actions p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .auth-actions a,
+  .auth-switch a {
+    color: #245fca;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .auth-actions a:hover,
+  .auth-switch a:hover {
+    text-decoration: underline;
+  }
+
+  .auth-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 49px;
+    padding: 0 25px;
+    border: 0;
+    border-radius: 11px;
+    background: #17366e;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+
+  .auth-submit:hover {
+    transform: translateY(-1px);
+    background: #245fca;
+  }
+
+  @media (max-width: 650px) {
+    .auth-grid,
+    .auth-course-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .auth-form {
+      padding: 22px 18px;
+    }
+
+    .auth-card-top {
+      padding: 22px 18px;
+    }
+
+    .auth-section {
+      padding: 18px;
+    }
+
+    .auth-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .auth-submit {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  function updateRegistrationFields() {
+    const roleSelect = document.getElementById('role');
+    const isStudent = roleSelect.value === 'student';
+    const isApprovalRole =
+      roleSelect.value === 'lecturer' ||
+      roleSelect.value === 'advisor';
+
+    document.querySelectorAll('.student-fields').forEach(function (element) {
+      element.hidden = !isStudent;
+    });
+
+    document.querySelectorAll('.student-required').forEach(function (element) {
+      element.required = isStudent;
+    });
+
+    const approvalNotice = document.getElementById('approval-notice');
+    approvalNotice.hidden = !isApprovalRole;
+
+    document.querySelectorAll('.course-required').forEach(function (element) {
+      element.required = false;
+    });
+
+    const courseBoxes = document.querySelectorAll(
+      'input[name="course_ids"]'
+    );
+
+    courseBoxes.forEach(function (element) {
+      element.required = false;
+    });
+
+        const courseSection = document.querySelector('.student-fields');
+    const registrationForm = document.querySelector('.auth-form');
+
+    if (registrationForm && !registrationForm.dataset.courseValidation) {
+      registrationForm.dataset.courseValidation = 'enabled';
+
+      registrationForm.addEventListener('submit', function (event) {
+        const studentSelected =
+          document.getElementById('role').value === 'student';
+
+        if (!studentSelected) return;
+
+        const checkedCourses = document.querySelectorAll(
+          'input[name="course_ids"]:checked'
+        );
+
+        if (checkedCourses.length === 0) {
+          event.preventDefault();
+          alert('Please select at least one course.');
+          courseSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateRegistrationFields);
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <header class="auth-heading">
+    <span class="auth-eyebrow">STUDENT PERFORMANCE SYSTEM</span>
+    <h1>Create your account</h1>
+    <p>
+      Set up your account to access the system. Students can start immediately.
+      Lecturer and Class Advisor accounts require administrator approval.
+    </p>
+  </header>
+
+  <section class="auth-card">
+    <div class="auth-card-top">
+      <h2>Account details</h2>
+      <p>Enter your details below. Fields marked as required must be completed.</p>
+    </div>
+
+    <form class="auth-form" method="post" action="{{ url_for('register') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="auth-grid">
+        <div class="auth-field">
+          <label for="full_name">Full name</label>
+          <input
+            id="full_name"
+            type="text"
+            name="full_name"
+            maxlength="120"
+            autocomplete="name"
+            placeholder="Enter your full name"
+            required
+          >
+        </div>
+
+        <div class="auth-field">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          >
+        </div>
+
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            minlength="10"
+            autocomplete="new-password"
+            placeholder="At least 10 characters"
+            required
+          >
+          <small class="auth-help">Use at least 10 characters.</small>
+        </div>
+
+        <div class="auth-field">
+          <label for="role">Account type</label>
+          <select id="role" name="role" onchange="updateRegistrationFields()" required>
+            <option value="student">Student</option>
+            <option value="lecturer">Lecturer</option>
+            <option value="advisor">Class Advisor</option>
+          </select>
+          <small class="auth-help">Choose the role that matches your responsibilities.</small>
+        </div>
+      </div>
+
+      <div id="approval-notice" class="auth-notice" hidden>
+        <strong>Administrator approval required.</strong>
+        Your account will remain pending until an administrator approves it.
+        You can sign in after approval.
+      </div>
+
+      <section class="auth-section student-fields">
+        <div class="auth-section-heading">
+          <h3>Student information</h3>
+          <p>These details are required when registering as a student.</p>
+        </div>
+
+        <div class="auth-grid">
+          <div class="auth-field">
+            <label for="student_id">Student ID</label>
+            <input
+              id="student_id"
+              class="student-required"
+              type="text"
+              name="student_id"
+              maxlength="60"
+              placeholder="e.g. SE/2024/001"
+            >
+          </div>
+
+          <div class="auth-field">
+            <label for="level">Current level</label>
+            <select id="level" class="student-required" name="level">
+              <option value="">Select your level</option>
+              {% for level in levels %}
+                <option value="{{ level }}">{{ level }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="auth-section-heading">
+          <h3>Courses you are taking</h3>
+          <p>Select at least one course to complete student registration.</p>
+        </div>
+
+        <div class="auth-course-grid">
+          {% for course in courses %}
+            <label class="auth-course-option">
+              <input
+                type="checkbox"
+                name="course_ids"
+                value="{{ course.id }}"
+                {% if loop.first %}class="course-required"{% endif %}
+              >
+              <span>{{ course.name }}</span>
+            </label>
+          {% else %}
+            <p>No courses are available yet. Please contact the administrator.</p>
+          {% endfor %}
+        </div>
+      </section>
+
+      <div class="auth-actions">
+        <p>
+          Already registered?
+          <a href="{{ url_for('login') }}">Sign in here</a>
+        </p>
+        <button class="auth-submit" type="submit">Create account&nbsp; →</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}

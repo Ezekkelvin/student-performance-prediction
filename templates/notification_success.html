@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="notification-success">
+    <div class="success-card">
+
+        <div class="success-icon" aria-hidden="true">✓</div>
+
+        <span class="eyebrow">EARLY INTERVENTION</span>
+
+        <h1>Lecturer Notified</h1>
+
+        <p>
+            The intervention alert has been accepted by the email
+            service for delivery to the lecturer assigned to this course.
+        </p>
+
+        <div class="notification-details">
+            <div>
+                <span>Student ID</span>
+                <strong>{{ student.student_id or "Not provided" }}</strong>
+            </div>
+
+            <div>
+                <span>Course</span>
+                <strong>{{ course.name }}</strong>
+            </div>
+
+            <div>
+                <span>Lecturer</span>
+                <strong>{{ lecturer.full_name }}</strong>
+            </div>
+
+            <div>
+                <span>Status</span>
+                <strong>Notification Submitted</strong>
+            </div>
+        </div>
+
+        <div class="notification-actions">
+            <a href="{{ url_for('predict') }}" class="btn btn-primary">
+                Make Another Prediction
+            </a>
+
+            <a href="{{ url_for('advisor_dashboard') }}" class="btn">
+                Back to Dashboard
+            </a>
+        </div>
+
+        <p class="notification-note">
+            This confirms that the email service accepted the request.
+            It does not confirm that the lecturer has read the email.
+        </p>
+    </div>
+</section>
+{% endblock %}

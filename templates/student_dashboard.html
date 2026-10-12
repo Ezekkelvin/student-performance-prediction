@@ -1,0 +1,199 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Student Attendance | Student Performance System{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <span class="eyebrow">STUDENT WORKSPACE</span>
+        <h1>Your attendance</h1>
+        <p>
+            Welcome back, {{ current_user.full_name }}.
+            View open class registers and track your course attendance.
+        </p>
+    </div>
+    <div class="heading-icon">✓</div>
+</section>
+
+<section class="student-profile-strip">
+    <div class="profile-avatar">
+        {{ current_user.full_name[:1]|upper }}
+    </div>
+    <div class="profile-details">
+        <span>STUDENT PROFILE</span>
+        <strong>{{ current_user.full_name }}</strong>
+        <p>
+            Student ID: {{ current_user.student_id or 'Not provided' }}
+            <span class="profile-separator">·</span>
+            {{ current_user.level or 'Level not specified' }}
+        </p>
+    </div>
+</section>
+
+<section class="content-card student-section" id="active-classes">
+    <div class="section-title-row">
+        <div>
+            <span class="eyebrow">ACTION REQUIRED</span>
+            <h2>Open class registers</h2>
+            <p>
+                Submit your attendance claim while the lecturer's register
+                is open.
+            </p>
+        </div>
+        <span class="count-pill">{{ active|length }} open</span>
+    </div>
+
+    {% if active %}
+        <div class="active-class-grid">
+            {% for s in active %}
+                {% set claim = s.attendance_records
+                    |selectattr('student_id', 'equalto', current_user.id)
+                    |first %}
+
+                <article class="active-class-card">
+                    <div class="class-card-top">
+                        <span class="course-icon">▤</span>
+                        <span class="status-tag status-open">Register open</span>
+                    </div>
+
+                    <h3>{{ s.course.name }}</h3>
+
+                    <div class="class-detail-list">
+                        <div>
+                            <span class="detail-symbol">▦</span>
+                            <div>
+                                <small>Class date</small>
+                                <strong>{{ s.session_date }}</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="detail-symbol">◷</span>
+                            <div>
+                                <small>Time</small>
+                                <strong>
+                                    {{ s.start_time.strftime('%H:%M') }}
+                                    – {{ s.end_time.strftime('%H:%M') }}
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="detail-symbol">⌖</span>
+                            <div>
+                                <small>Venue</small>
+                                <strong>{{ s.room or 'Not specified' }}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attendance-action">
+                        {% if claim %}
+                            <span class="status-tag
+                                {% if claim.status == 'confirmed' %}
+                                    status-assigned
+                                {% elif claim.status == 'rejected' %}
+                                    status-unassigned
+                                {% else %}
+                                    status-pending
+                                {% endif %}">
+                                {{ claim.status|title }}
+                            </span>
+
+                            <p class="action-caption">
+                                {% if claim.status == 'pending' %}
+                                    Your claim has been submitted and is
+                                    waiting for lecturer review.
+                                {% elif claim.status == 'confirmed' %}
+                                    Your attendance has been confirmed.
+                                {% elif claim.status == 'rejected' %}
+                                    Your claim was rejected. Contact your
+                                    lecturer if you think this is incorrect.
+                                {% else %}
+                                    Your attendance record has been saved.
+                                {% endif %}
+                            </p>
+                        {% else %}
+                            <p class="action-caption">
+                                Have you arrived for this class? Submit
+                                your attendance claim below.
+                            </p>
+
+                            <form method="post"
+                                  action="{{ url_for('mark_attendance', session_id=s.id) }}">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token() }}">
+                                <button type="submit"
+                                        class="button button-primary button-wide">
+                                    Mark attendance <span aria-hidden="true">→</span>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state empty-state-compact">
+            <div class="empty-icon">◷</div>
+            <h3>No open registers right now</h3>
+            <p>
+                When a lecturer opens the register for one of your enrolled
+                courses, that class will appear here.
+            </p>
+        </div>
+    {% endif %}
+</section>
+
+<section class="content-card student-section" id="my-courses">
+    <div class="section-title-row">
+        <div>
+            <span class="eyebrow">YOUR PROGRESS</span>
+            <h2>Course attendance summary</h2>
+            <p>
+                Percentages are calculated from confirmed attendance and
+                finalized class sessions.
+            </p>
+        </div>
+    </div>
+
+    {% if enrollments %}
+        <div class="course-progress-list">
+            {% for e in enrollments %}
+                <article class="course-progress-row">
+                    <div class="course-progress-icon">▤</div>
+
+                    <div class="course-progress-main">
+                        <h3>{{ e.course.name }}</h3>
+                        <p>
+                            Lecturer:
+                            {{ e.course.lecturer.full_name
+                               if e.course.lecturer else 'Not assigned' }}
+                        </p>
+                    </div>
+
+                    <div class="course-progress-value">
+                        <strong>{{ stats[e.course_id] }}%</strong>
+                        <span>Attendance</span>
+                    </div>
+
+                    <div class="progress-track"
+                         role="img"
+                         aria-label="Attendance {{ stats[e.course_id] }} percent">
+                        <span style="width: {{ [100, [0, stats[e.course_id]|float]|max]|min }}%"></span>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state empty-state-compact">
+            <h3>No enrolled courses yet</h3>
+            <p>
+                Your course summary will appear here once your registration
+                includes courses.
+            </p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

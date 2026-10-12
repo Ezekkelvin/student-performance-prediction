@@ -1,0 +1,350 @@
+
+{% extends "base.html" %}
+
+{% block title %}Sign In | Student Performance System{% endblock %}
+
+{% block head %}
+<style>
+    .login-page {
+        min-height: 68vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 920px;
+        margin: 2.5rem auto;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid #e1e7f0;
+        border-radius: 22px;
+        box-shadow: 0 24px 70px rgba(23, 35, 59, 0.12);
+    }
+
+    .login-showcase {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 42px 36px;
+        overflow: hidden;
+        color: #ffffff;
+        background: linear-gradient(145deg, #14284b 0%, #2459c4 100%);
+    }
+
+    .login-showcase::before,
+    .login-showcase::after {
+        content: "";
+        position: absolute;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .login-showcase::before {
+        width: 280px;
+        height: 280px;
+        right: -120px;
+        top: 80px;
+    }
+
+    .login-showcase::after {
+        width: 200px;
+        height: 200px;
+        right: -80px;
+        top: 120px;
+    }
+
+    .login-brand-mark {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.25);
+        font-size: 23px;
+        font-weight: 800;
+    }
+
+    .login-showcase-content {
+        position: relative;
+        z-index: 1;
+        margin: 50px 0;
+    }
+
+    .login-eyebrow {
+        display: inline-block;
+        margin-bottom: 16px;
+        color: #c8dcff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .login-showcase h1 {
+        margin: 0 0 18px;
+        color: #ffffff;
+        font-size: clamp(30px, 4vw, 42px);
+        line-height: 1.15;
+        letter-spacing: -1.3px;
+    }
+
+    .login-showcase p {
+        max-width: 340px;
+        color: #dce8ff;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    .login-benefit {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 18px;
+        color: #e8f0ff;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .login-benefit-icon {
+        display: flex;
+        flex: 0 0 28px;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+        background: rgba(255,255,255,0.14);
+        font-weight: 800;
+    }
+
+    .login-panel {
+        padding: 48px 42px;
+        align-self: center;
+        min-width: 0;
+    }
+
+    .login-panel h2 {
+        margin: 0 0 10px;
+        color: #17233b;
+        font-size: 30px;
+        letter-spacing: -0.8px;
+    }
+
+    .login-intro {
+        margin: 0 0 30px;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .login-form .login-field {
+        display: block;
+        margin: 0 0 20px;
+        color: #27364d;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .login-form .login-field input {
+        display: block;
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+        margin-top: 9px;
+        padding: 14px 15px;
+        border: 1px solid #d7dfeb;
+        border-radius: 10px;
+        outline: none;
+        background: #fbfcff;
+        color: #17233b;
+        font: inherit;
+        font-size: 14px;
+        transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+
+    .login-form .login-field input:focus {
+        border-color: #2459c4;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(36,89,196,0.12);
+    }
+
+    .login-submit {
+        width: 100%;
+        margin-top: 5px;
+        padding: 14px 18px;
+        border: none;
+        border-radius: 10px;
+        background: #2459c4;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background .2s, transform .2s;
+    }
+
+    .login-submit:hover {
+        background: #1947a6;
+        transform: translateY(-1px);
+    }
+
+    .login-register {
+        margin: 25px 0 0;
+        color: #64748b;
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .login-register a {
+        color: #2459c4;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .login-register a:hover {
+        text-decoration: underline;
+    }
+
+    .login-security-note {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0f5;
+        color: #7a879a;
+        font-size: 11px;
+    }
+
+    @media (max-width: 720px) {
+        .login-page {
+            grid-template-columns: 1fr;
+            margin: 1rem auto;
+            border-radius: 16px;
+        }
+
+        .login-showcase {
+            padding: 28px 25px;
+        }
+
+        .login-showcase-content {
+            margin: 28px 0 18px;
+        }
+
+        .login-showcase h1 {
+            font-size: 32px;
+        }
+
+        .login-showcase .login-benefit {
+            margin-top: 12px;
+        }
+
+        .login-panel {
+            padding: 32px 25px;
+        }
+
+        .login-panel h2 {
+            font-size: 27px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="login-page">
+    <aside class="login-showcase">
+        <div class="login-brand-mark" aria-hidden="true">SP</div>
+
+        <div class="login-showcase-content">
+            <span class="login-eyebrow">Student Performance System</span>
+
+            <h1>Your next step starts here.</h1>
+
+            <p>
+                Sign in to access your workspace and the tools available
+                for your role in student performance monitoring.
+            </p>
+
+            <div class="login-benefit">
+                <span class="login-benefit-icon" aria-hidden="true">✓</span>
+                <span>Track attendance and class participation.</span>
+            </div>
+
+            <div class="login-benefit">
+                <span class="login-benefit-icon" aria-hidden="true">✓</span>
+                <span>Support early identification of students who may need help.</span>
+            </div>
+
+            <div class="login-benefit">
+                <span class="login-benefit-icon" aria-hidden="true">✓</span>
+                <span>Access a workspace tailored to your account role.</span>
+            </div>
+        </div>
+
+        <small style="color:#c8d8f5; font-size:11px;">
+            Software Engineering · Student Performance Prediction
+        </small>
+    </aside>
+
+    <div class="login-panel">
+        <h2>Welcome back</h2>
+
+        <p class="login-intro">
+            Enter your account details below to continue.
+        </p>
+
+        <form class="login-form" method="POST" action="{{ url_for('login') }}">
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <label class="login-field" for="login-email">
+                Email address
+                <input
+                    id="login-email"
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                    autofocus
+                >
+            </label>
+
+            <label class="login-field" for="login-password">
+                Password
+                <input
+                    id="login-password"
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </label>
+
+            <button class="login-submit" type="submit">
+                Sign in to your account →
+            </button>
+        </form>
+
+        <p class="login-register">
+            New to the system?
+            <a href="{{ url_for('register') }}">Create an account</a>
+        </p>
+
+        <div class="login-security-note">
+            <span aria-hidden="true">🔒</span>
+            <span>Your account is protected by password authentication.</span>
+        </div>
+    </div>
+</section>
+{% endblock %}

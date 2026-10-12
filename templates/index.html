@@ -1,0 +1,208 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Home | Student Performance Prediction System{% endblock %}
+
+{% block content %}
+<section class="landing-hero">
+    <div class="hero-copy">
+        <span class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            MACHINE LEARNING · ATTENDANCE · EARLY SUPPORT
+        </span>
+
+        <h1>
+            Help students succeed
+            <span>before the final exam.</span>
+        </h1>
+
+        <p class="hero-description">
+            A smarter way for academic teams to monitor attendance, review
+            performance indicators and identify students who may benefit
+            from timely support.
+        </p>
+
+        <div class="hero-actions">
+            <a class="button button-primary button-large"
+               href="{{ url_for('register') }}">
+                Get started <span aria-hidden="true">→</span>
+            </a>
+            <a class="button button-outline button-large"
+               href="{{ url_for('about') }}">
+                Explore the system
+            </a>
+        </div>
+
+        <div class="hero-trust-row">
+            <span><b>✓</b> Course-based attendance</span>
+            <span><b>✓</b> ML-assisted predictions</span>
+            <span><b>✓</b> Lecturer intervention alerts</span>
+        </div>
+    </div>
+
+    <div class="hero-visual" aria-label="System workflow overview">
+        <div class="visual-glow"></div>
+
+        <div class="visual-window">
+            <div class="visual-window-top">
+                <div class="window-dots"><i></i><i></i><i></i></div>
+                <span>Performance overview</span>
+            </div>
+
+            <div class="visual-welcome">
+                <span class="visual-mini-label">ACADEMIC INSIGHT</span>
+                <h2>See the bigger picture.</h2>
+                <p>Attendance records and academic indicators in one workflow.</p>
+            </div>
+
+            <div class="visual-metrics">
+                <div class="visual-metric">
+                    <span class="metric-icon metric-icon-blue">✓</span>
+                    <div>
+                        <small>Attendance</small>
+                        <strong>Tracked by course</strong>
+                    </div>
+                </div>
+
+                <div class="visual-metric">
+                    <span class="metric-icon metric-icon-violet">◎</span>
+                    <div>
+                        <small>Prediction</small>
+                        <strong>Early risk indication</strong>
+                    </div>
+                </div>
+
+                <div class="visual-metric">
+                    <span class="metric-icon metric-icon-green">↗</span>
+                    <div>
+                        <small>Intervention</small>
+                        <strong>Support when needed</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visual-footer">
+                <span class="visual-footer-mark">SP</span>
+                <div>
+                    <strong>Student Performance System</strong>
+                    <small>Academic decision support</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="landing-section">
+    <div class="section-intro">
+        <span class="eyebrow">ONE CONNECTED WORKFLOW</span>
+        <h2>Everything works together.</h2>
+        <p>
+            From class registration to early intervention, each role has
+            the tools it needs to contribute to the process.
+        </p>
+    </div>
+
+    <div class="landing-feature-grid">
+        <article class="landing-feature-card">
+            <span class="feature-icon feature-blue">▦</span>
+            <span class="feature-step">01 · ATTENDANCE</span>
+            <h3>Keep reliable class records</h3>
+            <p>
+                Lecturers schedule sessions, manage registers and review
+                student attendance claims. Confirmed records contribute
+                to each course's attendance percentage.
+            </p>
+        </article>
+
+        <article class="landing-feature-card">
+            <span class="feature-icon feature-purple">◎</span>
+            <span class="feature-step">02 · PREDICTION</span>
+            <h3>Spot potential risk earlier</h3>
+            <p>
+                Class advisors combine attendance with assignment,
+                practical, CA, previous CGPA and class participation
+                indicators to generate a prediction.
+            </p>
+        </article>
+
+        <article class="landing-feature-card">
+            <span class="feature-icon feature-green">↗</span>
+            <span class="feature-step">03 · INTERVENTION</span>
+            <h3>Turn insight into action</h3>
+            <p>
+                When a student is classified as At Risk, an advisor can
+                choose to email the lecturer assigned to that course
+                for follow-up support.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="landing-roles">
+    <div class="roles-copy">
+        <span class="eyebrow">BUILT AROUND YOUR ROLE</span>
+        <h2>A clearer workflow for everyone.</h2>
+        <p>
+            The system brings students, lecturers, class advisors and
+            administrators into one coordinated process.
+        </p>
+        <a href="{{ url_for('about') }}" class="text-link">
+            Learn how it works <span aria-hidden="true">→</span>
+        </a>
+    </div>
+
+    <div class="role-list">
+        <div class="role-list-item">
+            <span class="role-number">01</span>
+            <div>
+                <h3>Students</h3>
+                <p>Submit attendance claims and review course attendance.</p>
+            </div>
+        </div>
+
+        <div class="role-list-item">
+            <span class="role-number">02</span>
+            <div>
+                <h3>Lecturers</h3>
+                <p>Schedule classes and confirm attendance records.</p>
+            </div>
+        </div>
+
+        <div class="role-list-item">
+            <span class="role-number">03</span>
+            <div>
+                <h3>Class advisors</h3>
+                <p>Review academic indicators and make predictions.</p>
+            </div>
+        </div>
+
+        <div class="role-list-item">
+            <span class="role-number">04</span>
+            <div>
+                <h3>Administrators</h3>
+                <p>Approve staff accounts and assign lecturers to courses.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="landing-cta">
+    <div>
+        <span class="eyebrow">GET STARTED</span>
+        <h2>Make academic support more proactive.</h2>
+        <p>
+            Register for the appropriate role to access the system's
+            available features.
+        </p>
+    </div>
+    <a class="button button-light button-large"
+       href="{{ url_for('register') }}">
+        Create an account <span aria-hidden="true">→</span>
+    </a>
+</section>
+
+<p class="landing-disclaimer">
+    Predictions are estimates generated by a machine-learning model.
+    They are intended to support academic judgement, not replace it.
+</p>
+{% endblock %}

@@ -1,0 +1,151 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Schedule Classes | Student Performance System{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <span class="eyebrow">LECTURER WORKSPACE</span>
+        <h1>Schedule classes</h1>
+        <p>
+            Create a recurring timetable for one of your assigned courses.
+            The system will generate a session for each matching weekday.
+        </p>
+    </div>
+    <div class="heading-icon">▦</div>
+</section>
+
+{% if not courses %}
+    <section class="empty-state">
+        <div class="empty-icon">!</div>
+        <h2>No courses assigned yet</h2>
+        <p>
+            You need an assigned course before you can schedule classes.
+            Please contact your administrator.
+        </p>
+    </section>
+{% else %}
+    <div class="schedule-layout">
+        <section class="content-card schedule-form-card">
+            <div class="card-heading">
+                <div>
+                    <span class="eyebrow">NEW TIMETABLE</span>
+                    <h2>Class details</h2>
+                    <p>Complete the details below to create your sessions.</p>
+                </div>
+                <span class="step-number">01</span>
+            </div>
+
+            <form method="post" class="modern-form">
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="form-section-heading">
+                    <span>1</span>
+                    <div>
+                        <h3>Course and day</h3>
+                        <p>Select the course and the weekday for the classes.</p>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="course_id">Course</label>
+                    <select id="course_id" name="course_id" required>
+                        <option value="">Choose an assigned course</option>
+                        {% for c in courses %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="weekday">Class day</label>
+                    <select id="weekday" name="weekday" required>
+                        {% for n, day in weekdays %}
+                            <option value="{{ n }}">{{ day }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-section-heading">
+                    <span>2</span>
+                    <div>
+                        <h3>Class time</h3>
+                        <p>Enter the start and end time for each session.</p>
+                    </div>
+                </div>
+
+                <div class="form-grid-modern">
+                    <div class="form-field">
+                        <label for="start_time">Start time</label>
+                        <input id="start_time" type="time"
+                               name="start_time" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="end_time">End time</label>
+                        <input id="end_time" type="time"
+                               name="end_time" required>
+                    </div>
+                </div>
+
+                <div class="form-section-heading">
+                    <span>3</span>
+                    <div>
+                        <h3>Schedule period</h3>
+                        <p>Choose the first and last dates of the timetable.</p>
+                    </div>
+                </div>
+
+                <div class="form-grid-modern">
+                    <div class="form-field">
+                        <label for="first_date">First date</label>
+                        <input id="first_date" type="date"
+                               name="first_date" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="last_date">Last date</label>
+                        <input id="last_date" type="date"
+                               name="last_date" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="room">Room or venue <span class="optional-label">Optional</span></label>
+                    <input id="room" name="room" type="text"
+                           maxlength="100"
+                           placeholder="e.g. Software Engineering Lab">
+                </div>
+
+                <button type="submit" class="button button-primary button-wide">
+                    Create timetable <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <aside class="schedule-help-column">
+            <section class="content-card help-card">
+                <div class="help-icon">✓</div>
+                <h3>What happens next?</h3>
+                <ul class="check-list">
+                    <li>Your recurring timetable is saved.</li>
+                    <li>Individual class sessions are created.</li>
+                    <li>Open a register when a class begins.</li>
+                    <li>Review attendance claims and close the register.</li>
+                </ul>
+            </section>
+
+            <section class="schedule-tip">
+                <span class="tip-label">TIP</span>
+                <h3>Keep your timetable accurate</h3>
+                <p>
+                    Use the correct weekday, venue and time so students can
+                    identify the right class before submitting attendance.
+                </p>
+            </section>
+        </aside>
+    </div>
+{% endif %}
+{% endblock %}

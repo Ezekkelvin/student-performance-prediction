@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Home | Student Performance System{% endblock %}
+{% block content %}
+<section class="role-home-hero">
+  <div class="role-home-copy">
+    <span class="eyebrow">{{ page.eyebrow }}</span>
+    <h1>{{ page.heading }}</h1>
+    <p>{{ page.intro }}</p>
+    <div class="role-home-actions">
+      {% if current_user.role == 'student' %}
+        <a class="btn btn-primary" href="{{ url_for(page.action_endpoint) }}#active-classes">{{ page.action_label }}</a>
+      {% else %}
+        <a class="btn btn-primary" href="{{ url_for(page.action_endpoint) }}">{{ page.action_label }}</a>
+      {% endif %}
+      {% if page.secondary_endpoint %}
+        {% if page.secondary_anchor %}
+          <a class="btn btn-secondary" href="{{ url_for(page.secondary_endpoint) }}#{{ page.secondary_anchor }}">{{ page.secondary_label }}</a>
+        {% else %}
+          <a class="btn btn-secondary" href="{{ url_for(page.secondary_endpoint) }}">{{ page.secondary_label }}</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <aside class="role-home-sidecard">
+    <span class="role-home-icon">✦</span>
+    <span class="eyebrow">YOUR WORKSPACE</span>
+    <h2>{{ current_user.full_name }}</h2>
+    <p>Signed in as <strong>{{ current_user.role|title }}</strong></p>
+    <div class="role-home-status"><span></span> Account active</div>
+  </aside>
+</section>
+<section class="role-home-section">
+  <div class="section-heading">
+    <span class="eyebrow">QUICK OVERVIEW</span>
+    <h2>What you can do here</h2>
+    <p>Your workspace is organized around the tasks and responsibilities of your role.</p>
+  </div>
+  <div class="role-feature-grid">
+    {% for title, description in page.features %}
+    <article class="role-feature-card">
+      <span class="role-feature-number">0{{ loop.index }}</span>
+      <h3>{{ title }}</h3>
+      <p>{{ description }}</p>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="role-home-note">Performance predictions are decision-support estimates. Review the student's circumstances before making academic decisions.</p>
+</section>
+{% endblock %}
