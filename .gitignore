@@ -5,3 +5,4 @@ __pycache__/
 *.db
 instance/
 .pytest_cache/
+.venv312
